@@ -1,0 +1,59 @@
+
+
+#         Powered by TabooLib 6.0         #
+
+
+Name: '工具仓库'
+Enabled-Lock: true
+Permission: 'faithlpack.pack.tool'
+Inventory:
+  title: '&b工具仓库 &8[{page}/{pages}]'
+  pages: 3
+  rows: 6
+  default-size: 18
+  items:
+    unlock:
+      display:
+        material: 'LIGHT_BLUE_STAINED_GLASS_PANE'
+        name: '&7未解锁'
+        lore:
+          - '&8| &a左键 &8消耗 &6100点卷 &8解锁该槽位'
+          - '&8| &a右键 &8消耗 &61个解锁石 &8解锁该槽位'
+        shiny: true
+      action:
+        left-click: |-
+          if check type int papi *"%playerpoints_points%" >= *100 then {
+            command inline *"points take {{ sender }} 100" as op
+            unlock @clickedSlot
+            tell color *"&7[&bFaithlPack&7] &r你花费了 &b100点卷 &r来解锁了该槽位."
+          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的点卷来解锁该槽位."
+        right-click: |-
+          TODO
+    page:
+      display:
+        material: 'SPECTRAL_ARROW'
+        name: '&7页码'
+        shiny: true
+        lore:
+          - '&8| &a左键 &8下一页'
+          - '&8| &6右键 &8上一页'
+    setting:
+      auto-pickup:
+        display:
+          material: 'RED_STAINED_GLASS_PANE'
+          name: '&7自动拾取'
+          lore: '&8| 点击开启或关闭'
+          shiny: true
+    null:
+      display:
+        material: 'GRAY_STAINED_GLASS_PANE'
+        name: ''
+AutoPickup:
+  enabled: true
+  player-default-enabled: true
+  permission: 'faithl.auto.tool'
+  condition:
+    mode: 'name'
+    value:
+      - '镐'
+      - '斧'

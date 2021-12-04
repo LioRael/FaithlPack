@@ -1,0 +1,23 @@
+
+
+#         Powered by TabooLib 6.0         #
+
+
+Plugin-Enabled: '&7[&bFaithlPack&7] &r插件已加载,当前版本:&b{0}&r,Kotlin版本:&b{1}&r.'
+Plugin-Disabled: '&7[&bFaithlPack&7] &r插件已卸载,感谢你的使用.'
+
+Command-Help-Type: '命令'
+Command-Help-Args: '参数'
+Command-Open-Description: '打开仓库'
+Command-Reload-Description: '重载插件'
+Command-Open-Info: '&7[&bFaithlPack&7] &r已为玩家 &b{0} &r打开 &b{1}&r.'
+Command-Reload-Info: '&7[&bFaithlPack&7] &r插件已重载.'
+
+Pack-Auto-Pick-On: '&7[&bFaithlPack&7] &c{0} 的自动拾取已开启.'
+Pack-Auto-Pick-Off: '&7[&bFaithlPack&7] &c{0} 的自动拾取已关闭.'
+Pack-Auto-Pick-Info: '&7[&bFaithlPack&7] &r已为你将 &b{0} &r个 &b{1} &r放入 &b{2}&r.'
+
+Loader-Loaded: '&7[&bFaithlPack&7] &b{0} &r个仓库已加载 &8({1} ms)&r.'
+
+Player-Opened-Pack: '&7[&bFaithlPack&7] &r你已打开 &b{0}&r.'
+Player-No-Permission: '&7[&bFaithlPack&7] &c你没有使用该仓库的权限.'

@@ -1,0 +1,20 @@
+
+
+#         Powered by TabooLib 6.0         #
+
+
+Options:
+  check-update:
+Database:
+  type: SQLite
+  source:
+    MYSQL:
+      host: localhost
+      port: 3306
+      user: root
+      password: root
+      database: minecraft
+SortType: Lore
+Loader:
+  packs-files:
+    - ''
