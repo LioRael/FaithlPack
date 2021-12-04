@@ -1,7 +1,6 @@
 package com.faithl.pack
 
 import com.alibaba.fastjson.JSONObject
-import com.faithl.pack.common.inventory.Pack
 import com.faithl.pack.common.util.JsonUtil
 import com.faithl.pack.internal.conf.PackLoader
 import org.bukkit.entity.Player
@@ -47,6 +46,7 @@ object FaithlPack: Plugin() {
 
     fun init(){
         PackLoader.loadInventories()
+        checkUpdate()
     }
 
     /**
@@ -65,7 +65,7 @@ object FaithlPack: Plugin() {
             if (sender == null){
                 console().sendLang("Plugin-Update",pluginVersion,version)
             } else {
-                sender.sendLang("Plugin-Update",pluginVersion,version.source,"https://www.mcbbs.net/forum.php?mod=viewthread&tid=1273118")
+                sender.sendLang("Plugin-Update",pluginVersion,version.source,"https://www.mcbbs.net/thread-1281714-1-1.html")
             }
         }
     }

@@ -4,7 +4,7 @@
 
 
 Options:
-  check-update:
+  check-update: true
 Database:
   type: SQLite
   source:
@@ -14,7 +14,6 @@ Database:
       user: root
       password: root
       database: minecraft
-SortType: Lore
 Loader:
   packs-files:
     - ''

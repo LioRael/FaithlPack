@@ -90,7 +90,7 @@ object FaithlPackAPI {
      * @return Inventory数据
      */
     fun getPackInventory(player: Player,pack: Pack,page: Int):Inventory?{
-        return Database.INSTANCE.getPack(player,pack,page)?.deserializeToInventory()
+        return Database.INSTANCE.getPack(player,pack,page)?.deserializeToInventory() ?: return null
     }
 
     /**

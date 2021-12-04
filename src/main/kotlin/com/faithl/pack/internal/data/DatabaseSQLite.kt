@@ -47,9 +47,9 @@ class DatabaseSQLite: Database() {
         return tablePack.select(dataSource) {
             where("player" eq player.uniqueId.toString() and ("pack" eq pack.name!!) and ("page" eq page))
             rows("value")
-        }.first {
+        }.firstOrNull  {
             getString("value")
-        } ?: null
+        }
     }
 
     override fun setPack(player: Player, pack: Pack, page: Int, value: String) {

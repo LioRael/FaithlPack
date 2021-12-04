@@ -10,6 +10,7 @@ import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.util.asList
 import taboolib.module.kether.KetherShell
 import taboolib.module.nms.getItemTag
+import taboolib.platform.util.isAir
 import taboolib.platform.util.sendLang
 
 object InventoryClick {
@@ -26,7 +27,11 @@ object InventoryClick {
         if (InventoryUI.inventoryViewing[player] != e.inventory){
             return
         }
-        val type = e.currentItem?.getItemTag()?.getDeep("pack.type") ?: return
+        val item = e.currentItem ?: return
+        if (item.isAir()){
+            return
+        }
+        val type = item.getItemTag().getDeep("pack.type") ?: return
         val pack = InventoryUI.packViewing[player]
         e.isCancelled = true
         when(type.asString()){
@@ -50,10 +55,10 @@ object InventoryClick {
             "setting.auto-pickup" -> {
                 if (Database.INSTANCE.getAutoPickup(player as Player, pack!!)){
                     Database.INSTANCE.setAutoPickup(player,pack,false)
-                    player.sendLang("Pack-Auto-Pick-On", pack.name!!)
+                    player.sendLang("Pack-Auto-Pick-Off", pack.name!!)
                 }else{
                     Database.INSTANCE.setAutoPickup(player,pack,true)
-                    player.sendLang("Pack-Auto-Pick-Off", pack.name!!)
+                    player.sendLang("Pack-Auto-Pick-On", pack.name!!)
                 }
             }
         }
