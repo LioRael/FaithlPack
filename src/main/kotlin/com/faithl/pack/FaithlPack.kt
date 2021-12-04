@@ -33,7 +33,7 @@ object FaithlPack: Plugin() {
     var outOfDate = false
 
     override fun onLoad() {
-        Metrics(13331, pluginVersion, runningPlatform)
+        Metrics(13490, pluginVersion, runningPlatform)
     }
 
     override fun onEnable() {
