@@ -14,6 +14,8 @@ import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.util.asList
 import taboolib.library.xseries.XSound
 import taboolib.module.nms.getName
+import taboolib.platform.util.hasLore
+import taboolib.platform.util.hasName
 import taboolib.platform.util.sendLang
 
 object ItemPickUp {
@@ -74,6 +76,9 @@ object ItemPickUp {
         when(conditions.getString("mode")){
             "name" -> {
                 pack.autoPickup["condition.value"]?.asList()?.forEach{ value ->
+                    if (item.hasName(value)){
+                        return true
+                    }
                     if (item.getName().contains(value)){
                         return true
                     }
@@ -84,7 +89,7 @@ object ItemPickUp {
                     return false
                 }
                 pack.autoPickup["condition.value"]?.asList()?.forEach{ value ->
-                    if (item.itemMeta!!.lore?.contains(value) == true){
+                    if (item.hasLore(value)){
                         return true
                     }
                 }
