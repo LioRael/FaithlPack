@@ -8,7 +8,9 @@ object PlayerJoin {
 
     @SubscribeEvent
     fun e(e:PlayerJoinEvent){
-        checkUpdate(e.player)
+        if (e.player.isOp){
+            checkUpdate(e.player)
+        }
     }
 
 }
