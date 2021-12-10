@@ -8,7 +8,7 @@ import taboolib.module.chat.colored
 
 abstract class Database {
 
-    abstract fun getPack(player: Player, pack: Pack, page: Int): String?
+    abstract fun getPack(player: Player, pack: Pack)
 
     abstract fun setPack(player: Player, pack: Pack, page: Int, value: String)
 
@@ -38,7 +38,7 @@ abstract class Database {
     }
 
     fun getDefaultAutoPickup(player: Player, pack:Pack):Boolean{
-        val default = pack.autoPickup?.getBoolean("player-default-enabled")
+        val default = pack.sort?.getBoolean("auto-pickup.player-default-enabled")
         if (default != null){
             INSTANCE.setAutoPickup(player,pack,default)
             return default

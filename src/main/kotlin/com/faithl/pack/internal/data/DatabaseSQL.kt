@@ -2,6 +2,7 @@ package com.faithl.pack.internal.data
 
 import com.faithl.pack.FaithlPack
 import com.faithl.pack.common.inventory.Pack
+import com.faithl.pack.common.util.deserializeToInventory
 import org.bukkit.entity.Player
 import taboolib.module.database.*
 
@@ -45,12 +46,12 @@ class DatabaseSQL: Database() {
         tableSettings.createTable(dataSource)
     }
 
-    override fun getPack(player: Player, pack: Pack, page: Int): String? {
+    override fun getPack(player: Player, pack: Pack) {
         return tablePack.select(dataSource) {
-            where("player" eq player.uniqueId.toString() and ("pack" eq pack.name!!) and ("page" eq page))
-            rows("value")
-        }.firstOrNull {
-            getString("value")
+            where("player" eq player.uniqueId.toString() and ("pack" eq pack.name!!))
+            rows("value","page")
+        }.forEach {
+            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to getInt("page"))] = getString("value").deserializeToInventory()
         }
     }
 

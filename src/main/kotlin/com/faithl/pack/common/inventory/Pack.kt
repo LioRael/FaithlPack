@@ -16,7 +16,7 @@ class Pack(root: ConfigurationSection?) {
     val inventoryConfig = root!!.getConfigurationSection("Inventory")
     val enabledLock = root?.getBoolean("Enabled-Lock") ?: true
     val permission = root?.getString("Permission")
-    val autoPickup = root?.getConfigurationSection("AutoPickup")
+    val sort = root?.getConfigurationSection("Sort")
 
     companion object{
         val packList = mutableListOf<Pack>()

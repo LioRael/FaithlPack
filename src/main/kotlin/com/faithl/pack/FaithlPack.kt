@@ -1,6 +1,7 @@
 package com.faithl.pack
 
 import com.alibaba.fastjson.JSONObject
+import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.util.JsonUtil
 import com.faithl.pack.internal.conf.PackLoader
 import org.bukkit.entity.Player
@@ -41,6 +42,9 @@ object FaithlPack: Plugin() {
     }
 
     override fun onDisable() {
+        InventoryUI.inventoryViewing.forEach {
+            it.key.closeInventory()
+        }
         console().sendLang("Plugin-Disabled")
     }
 

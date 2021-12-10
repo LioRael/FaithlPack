@@ -1,9 +1,11 @@
 package com.faithl.pack.internal.listener
 
 import com.faithl.pack.api.FaithlPackAPI
+import com.faithl.pack.api.event.PackPickupEvent
 import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.inventory.Pack
 import com.faithl.pack.common.inventory.PackUI
+import com.faithl.pack.common.util.condition
 import com.faithl.pack.common.util.putItem
 import com.faithl.pack.internal.data.Database
 import ink.ptms.zaphkiel.ZaphkielAPI
@@ -27,19 +29,20 @@ object ItemPickUp {
         }
         val player = e.entity as Player
         pack@for (pack in Pack.packList){
-            if (pack.autoPickup?.getBoolean("enabled") ?: return)
+            if (pack.sort?.getBoolean("auto-pickup.enabled") ?: return)
             if (!Database.INSTANCE.getAutoPickup(player,pack)){
                 return
             }
             if (pack.permission != null && !player.hasPermission(pack.permission)){
                 return
             }
-            val autoPickupPermission = pack.autoPickup.getString("permission")
+            val autoPickupPermission = pack.sort.getString("auto-pickup.permission")
             if (autoPickupPermission !=null && !player.hasPermission(autoPickupPermission)){
                 return
             }
             if (condition(pack, e.item.itemStack)){
                 val itemStack = e.item.itemStack.clone()
+                PackPickupEvent(player,pack).call()
                 page@for (page in 1..pack.inventoryConfig!!.getInt("pages")){
                     if (pack.ui is PackUI){
                         if (InventoryUI.inventoryViewing[player] != null){
@@ -69,43 +72,5 @@ object ItemPickUp {
                 break@pack
             }
         }
-    }
-
-    fun condition(pack:Pack,item:ItemStack):Boolean{
-        val conditions = pack.autoPickup?.getConfigurationSection("condition") ?: return true
-        when(conditions.getString("mode")){
-            "name" -> {
-                pack.autoPickup["condition.value"]?.asList()?.forEach{ value ->
-                    if (item.hasName(value)){
-                        return true
-                    }
-                    if (item.getName().contains(value)){
-                        return true
-                    }
-                }
-            }
-            "lore" -> {
-                if (item.itemMeta == null){
-                    return false
-                }
-                pack.autoPickup["condition.value"]?.asList()?.forEach{ value ->
-                    if (item.hasLore(value)){
-                        return true
-                    }
-                }
-            }
-            "zap","zaphkiel" -> {
-                val itemStream = ZaphkielAPI.read(item)
-                if (itemStream.isExtension()){
-                    val type = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?:return false
-                    pack.autoPickup["condition.value"]?.asList()?.forEach{ value ->
-                        if (type == value){
-                            return true
-                        }
-                    }
-                }
-            }
-        }
-        return false
     }
 }

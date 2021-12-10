@@ -28,7 +28,10 @@ Inventory:
             tell color *"&7[&bFaithlPack&7] &r你花费了 &b100点卷 &r来解锁了该槽位."
           } else tell color *"&7[&bFaithlPack&7] &c你没有足够的点卷来解锁该槽位."
         right-click: |-
-          TODO
+          if inventory take name *解锁石 1 then {
+            unlock @clickedSlot
+            tell color *"&7[&bFaithlPack&7] &r你花费了 &b1个解锁石 &r来解锁了该槽位."
+          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的解锁石来解锁该槽位."
     page:
       display:
         material: 'SPECTRAL_ARROW'
@@ -42,18 +45,27 @@ Inventory:
         display:
           material: 'RED_STAINED_GLASS_PANE'
           name: '&7自动拾取'
-          lore: '&8| 点击开启或关闭'
+          lore:
+            - '&8| 点击开启或关闭'
           shiny: true
     null:
       display:
         material: 'GRAY_STAINED_GLASS_PANE'
         name: ''
-AutoPickup:
-  enabled: true
-  player-default-enabled: true
-  permission: 'faithl.auto.tool'
+Sort:
+  must-condition: true
   condition:
     mode: 'name'
     value:
       - '镐'
       - '斧'
+  auto-pickup:
+    enabled: true
+    player-default-enabled: true
+    permission: 'faithl.auto.tool'
+  bind:
+    material: 'DIAMOND'
+    name: '&b工具仓库绑定石'
+    lore:
+      - '&7 将该物品放入木箱/末影箱/熔炉中'
+      - '&7 即可将其绑定为工具仓库'

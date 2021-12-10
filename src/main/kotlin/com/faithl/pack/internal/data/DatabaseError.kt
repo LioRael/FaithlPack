@@ -8,7 +8,7 @@ class DatabaseError(val cause: Throwable): Database(){
         cause.printStackTrace()
     }
 
-    override fun getPack(player: Player, pack: Pack, page: Int): String? {
+    override fun getPack(player: Player, pack: Pack) {
         throw IllegalAccessError("Database initialization failed: ${cause.localizedMessage}")
     }
 

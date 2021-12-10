@@ -19,7 +19,7 @@ taboolib {
     install("module-nms")
     install("module-nms-util")
     classifier = null
-    version = "6.0.6-14"
+    version = "6.0.6-23"
     description {
         contributors {
             name("Leosouthey")

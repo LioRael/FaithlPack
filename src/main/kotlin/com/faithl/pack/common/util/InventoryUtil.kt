@@ -1,8 +1,13 @@
 package com.faithl.pack.common.util
 
+import com.faithl.pack.common.inventory.Pack
+import ink.ptms.zaphkiel.ZaphkielAPI
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import taboolib.common.util.asList
 import taboolib.module.nms.getItemTag
+import taboolib.module.nms.getName
+import taboolib.platform.util.hasLore
 import taboolib.platform.util.isAir
 
 /**
@@ -45,4 +50,39 @@ fun Inventory.putItem(item: ItemStack):ItemStack{
         }
     }
     return item
+}
+
+fun condition(pack: Pack, item:ItemStack):Boolean{
+    val conditions = pack.sort?.getConfigurationSection("condition") ?: return true
+    when(conditions.getString("mode")){
+        "name" -> {
+            pack.sort["condition.value"]?.asList()?.forEach{ value ->
+                if (item.getName().contains(value)){
+                    return true
+                }
+            }
+        }
+        "lore" -> {
+            if (item.itemMeta == null){
+                return false
+            }
+            pack.sort["condition.value"]?.asList()?.forEach{ value ->
+                if (item.hasLore(value)){
+                    return true
+                }
+            }
+        }
+        "zap","zaphkiel" -> {
+            val itemStream = ZaphkielAPI.read(item)
+            if (itemStream.isExtension()){
+                val type = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?:return false
+                pack.sort["condition.value"]?.asList()?.forEach{ value ->
+                    if (type == value){
+                        return true
+                    }
+                }
+            }
+        }
+    }
+    return false
 }

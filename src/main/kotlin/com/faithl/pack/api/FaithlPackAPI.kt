@@ -4,6 +4,7 @@ import com.faithl.pack.common.inventory.Pack
 import com.faithl.pack.common.util.deserializeToInventory
 import com.faithl.pack.common.util.serializeToString
 import com.faithl.pack.internal.data.Database
+import com.faithl.pack.internal.data.SerializedInventory
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import taboolib.common.platform.function.console
@@ -36,19 +37,6 @@ object FaithlPackAPI {
     }
 
     /**
-     * 非TabooLib ConfigurationSection创建仓库的解决方案
-     *
-     * @param root 仓库配置
-     */
-    fun createPack(root: org.bukkit.configuration.ConfigurationSection){
-        if (getPack(root.getString("Name")!!) == null){
-            Pack(root as ConfigurationSection)
-        }else{
-            console().sendMessage("&c[FaithlPack] The same name of pack already exists.")
-        }
-    }
-
-    /**
      * 从PackList中删除仓库
      *
      * @param pack 仓库
@@ -66,6 +54,9 @@ object FaithlPackAPI {
      * @param value 仓库值
      */
     fun setPack(player: Player,pack: Pack,page: Int, value: String) {
+        if (SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] == null){
+            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] = value.deserializeToInventory()
+        }
         Database.INSTANCE.setPack(player,pack,page,value)
     }
 
@@ -78,6 +69,9 @@ object FaithlPackAPI {
      * @param value Bukkit容器
      */
     fun setPack(player: Player,pack: Pack,page: Int, value: Inventory) {
+        if (SerializedInventory(player).inventories[mutableMapOf(pack to page)] == null){
+            SerializedInventory(player).inventories[mutableMapOf(pack to page)] = value
+        }
         Database.INSTANCE.setPack(player,pack,page,value.serializeToString())
     }
 
@@ -90,7 +84,10 @@ object FaithlPackAPI {
      * @return Inventory数据
      */
     fun getPackInventory(player: Player,pack: Pack,page: Int):Inventory?{
-        return Database.INSTANCE.getPack(player,pack,page)?.deserializeToInventory() ?: return null
+        if (SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] == null){
+            Database.INSTANCE.getPack(player,pack)
+        }
+        return SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)]
     }
 
     /**

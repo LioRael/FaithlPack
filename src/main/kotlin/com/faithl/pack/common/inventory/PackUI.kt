@@ -1,6 +1,7 @@
 package com.faithl.pack.common.inventory
 
 import com.faithl.pack.api.FaithlPackAPI
+import com.faithl.pack.api.event.PackOpenEvent
 import com.faithl.pack.common.util.deserializeToInventory
 import com.faithl.pack.internal.data.Database
 import org.bukkit.entity.Player
@@ -31,40 +32,41 @@ class PackUI(val pack:Pack): InventoryUI() {
 
     override fun open(player:Player, page:Int){
         val ui = getData(player,page) ?: return
+        PackOpenEvent(player,pack,page).call()
         player.openInventory(ui)
         inventoryViewing[player] = ui
         packViewing[player] = pack
         packPageViewing[player] = page
     }
 
-    fun updateItems(pack: Inventory) {
+    fun updateItems(player:Player,page :Int,pack: Inventory) {
         for (slot in 0 until pack.size){
             val type = pack.getItem(slot)?.getItemTag()?.getDeep("pack.type") ?: continue
-            val itemStack = getNBTItemStack(type.asString())
+            val itemStack = getNBTItemStack(player,page,type.asString())
             pack.setItem(slot,itemStack)
         }
     }
 
-    fun initItems(packInv: Inventory, defaultSize:Int = 0){
+    fun initItems(player:Player,page :Int,packInv: Inventory, defaultSize:Int = 0){
         val rows = pack.inventoryConfig!!.getInt("rows")
         if(pack.enabledLock){
-            val unlockItemStack = getNBTItemStack("unlock")
+            val unlockItemStack = getNBTItemStack(player,page,"unlock")
             for (slot in 0+defaultSize until (rows - 1) * 9) {
                 packInv.setItem(slot,unlockItemStack)
             }
         }
-        val pageItemStack = getNBTItemStack("page")
+        val pageItemStack = getNBTItemStack(player,page,"page")
         packInv.setItem(rows * 9 - 5,pageItemStack)
-        val nullItemStack = getNBTItemStack("null")
+        val nullItemStack = getNBTItemStack(player,page,"null")
         listOf(rows * 9 -2,rows *9 - 3,rows * 9 - 4,rows * 9 - 6,rows * 9 - 7,rows * 9 - 8,rows * 9 - 9).forEach {
             packInv.setItem(it,nullItemStack)
         }
-        val autoPickupItemStack = getNBTItemStack("setting.auto-pickup")
+        val autoPickupItemStack = getNBTItemStack(player,page,"setting.auto-pickup")
         packInv.setItem(rows * 9 -1,autoPickupItemStack)
     }
 
-    fun getNBTItemStack(type:String):ItemStack{
-        return getItemStack(type).apply {
+    fun getNBTItemStack(player: Player,page: Int,type:String):ItemStack{
+        return getItemStack(player,page,type).apply {
             getItemTag().also { itemTag ->
                 itemTag.putDeep("pack.type",type)
                 itemTag.saveTo(this)
@@ -72,10 +74,15 @@ class PackUI(val pack:Pack): InventoryUI() {
         }
     }
 
-    fun getItemStack(item:String): ItemStack {
+    fun getItemStack(player: Player,page: Int,item:String): ItemStack {
         return buildItem(pack.inventoryConfig?.getString("items.${item}.display.material")?.parseToXMaterial() ?:XMaterial.GRAY_STAINED_GLASS){
-            name = pack.inventoryConfig?.getString("items.${item}.display.name")?.colored() ?:""
-            lore += pack.inventoryConfig?.getStringList("items.${item}.display.lore")?.colored() ?: mutableListOf()
+            name = pack.inventoryConfig?.getString("items.${item}.display.name")?.colored()?.replacePlaceholder(player)
+                ?.replace("{page}",page.toString())
+                ?.replace("{pages}",pack.inventoryConfig.getInt("pages").toString()) ?:""
+            pack.inventoryConfig?.getStringList("items.${item}.display.lore")?.colored()?.forEach {
+                lore += it.replacePlaceholder(player).replace("{page}",page.toString()).replace("{pages}",
+                    pack.inventoryConfig.getInt("pages").toString())
+            }
             for (s in pack.inventoryConfig?.getStringList("items.${item}.display.enchants") ?: mutableListOf()) {
                 if (s.isEmpty()){
                     break
@@ -103,12 +110,12 @@ class PackUI(val pack:Pack): InventoryUI() {
         val databasePack = FaithlPackAPI.getPackInventory(player,pack,page)
         if (databasePack!=null){
             ui.contents = databasePack.contents
-            updateItems(ui)
+            updateItems(player,page,ui)
         }else{
             if (page == 1){
-                initItems(ui, pack.inventoryConfig.getInt("default-size"))
+                initItems(player,page,ui, pack.inventoryConfig.getInt("default-size"))
             }else{
-                initItems(ui)
+                initItems(player,page,ui)
             }
         }
         return ui
