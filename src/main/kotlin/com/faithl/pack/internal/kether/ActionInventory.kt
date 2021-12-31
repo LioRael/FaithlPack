@@ -64,8 +64,6 @@ class ActionInventory {
         }
     }
 
-
-
     companion object {
         @KetherParser(["inventory"], shared = true)
         fun parser() = scriptParser {

@@ -32,7 +32,7 @@ abstract class Database {
         fun e(e: PlayerLoginEvent) {
             if (INSTANCE is DatabaseError) {
                 e.result = PlayerLoginEvent.Result.KICK_OTHER
-                e.kickMessage = "&4&loERROR! &r&oThe &4&lFaithlInventory&r&o database failed to initialize.".colored()
+                e.kickMessage = "&4&loERROR! &r&oThe &4&lFaithlPack&r&o database failed to initialize.".colored()
             }
         }
     }

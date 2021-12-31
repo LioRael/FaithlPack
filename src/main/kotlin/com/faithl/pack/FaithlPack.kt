@@ -23,11 +23,12 @@ import taboolib.platform.util.sendLang
  * @author Leosouthey
  * @constructor Create empty Faithl pack
  */
-@RuntimeDependency(value = "com.alibaba:fastjson:1.2.78")
+@RuntimeDependency(value = "com.alibaba:fastjson:1.2.79")
 object FaithlPack: Plugin() {
 
     @Config("settings.yml", migrate = true,autoReload = true)
     lateinit var setting: Configuration
+        private set
 
     val plugin by lazy { BukkitPlugin.getInstance() }
     var outOfDate = false
