@@ -1,5 +1,6 @@
 package com.faithl.pack.internal.listener
 
+import com.faithl.pack.api.event.PackCloseEvent
 import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.inventory.PackUI
 import com.faithl.pack.internal.data.Database
@@ -36,11 +37,19 @@ object InventoryClick {
         e.isCancelled = true
         when (type.asString()) {
             "page" -> {
-                val page = InventoryUI.openingPage[player]!!
+                val page = InventoryUI.openingPage[player]
                 if (e.isLeftClick) {
-                    PackUI(pack!!).open(player as Player, page + 1)
+                    PackCloseEvent(
+                        player as Player, pack!!, page!!,
+                        InventoryUI.openingInventory[player]!!
+                    ).call()
+                    PackUI(pack).open(player, page + 1)
                 } else if (e.isRightClick) {
-                    PackUI(pack!!).open(player as Player, page - 1)
+                    PackCloseEvent(
+                        player as Player, pack!!, page!!,
+                        InventoryUI.openingInventory[player]!!
+                    ).call()
+                    PackUI(pack).open(player, page - 1)
                 }
             }
             "unlock" -> {

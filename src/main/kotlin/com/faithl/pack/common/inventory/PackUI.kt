@@ -125,10 +125,10 @@ class PackUI(val pack: Pack) : InventoryUI() {
             ui.contents = databasePack.contents
             updateItems(player, page, ui)
         } else {
-            if (page == 1) {
-                initItems(player, page, ui, pack.inventoryConfig.getInt("default-size"))
-            } else {
-                initItems(player, page, ui)
+            //初始化默认槽位
+            val default = pack.inventoryConfig.getInt("default-size") - page * 45
+            if (default > 0) {
+                initItems(player, page, ui, default)
             }
         }
         return ui
