@@ -25,7 +25,6 @@ object InventoryClose {
             InventoryUI.openingInventory[player]!!
         )
         event.call()
-        println(2)
         InventoryUI.openingInventory[player] = null
         InventoryUI.openingPack[player] = null
         InventoryUI.openingPage[player] = null

@@ -4,6 +4,7 @@ import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.common.inventory.InventoryUI
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryOpenEvent
+import org.bukkit.event.inventory.InventoryType
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.module.nms.getItemTag
 
@@ -20,6 +21,9 @@ object InventoryOpen {
         }
         val player = e.player as Player
         if (InventoryUI.openingInventory[player] != null) {
+            return
+        }
+        if (e.inventory.type == InventoryType.WORKBENCH) {
             return
         }
         for (item in e.inventory.storageContents) {
