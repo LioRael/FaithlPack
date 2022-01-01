@@ -33,22 +33,22 @@ data class SerializedInventory(val player: Player) {
 
         @SubscribeEvent
         fun e(e: PlayerQuitEvent) {
-            instances.remove(e.player)
             instances[e.player]!!.inventories.forEach { (packData, inventory) ->
                 packData.forEach { (pack, page) ->
                     FaithlPackAPI.setPack(e.player, pack, page, inventory)
                 }
             }
+            instances.remove(e.player)
         }
 
         @SubscribeEvent
         fun e(e: PlayerKickEvent) {
-            instances.remove(e.player)
             instances[e.player]!!.inventories.forEach { (packData, inventory) ->
                 packData.forEach { (pack, page) ->
                     FaithlPackAPI.setPack(e.player, pack, page, inventory)
                 }
             }
+            instances.remove(e.player)
         }
 
         @SubscribeEvent
