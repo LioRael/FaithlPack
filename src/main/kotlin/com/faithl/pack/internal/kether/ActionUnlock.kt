@@ -1,7 +1,6 @@
 package com.faithl.pack.internal.kether
 
 import com.faithl.pack.common.inventory.InventoryUI
-import com.faithl.pack.common.inventory.PackUI
 import org.bukkit.entity.Player
 import taboolib.library.xseries.XMaterial
 import taboolib.module.kether.*
@@ -19,14 +18,14 @@ class ActionUnlock {
 
         override fun run(frame: ScriptFrame): CompletableFuture<Unit> {
             val player = frame.script().sender?.castSafely<Player>() ?: error("No player selected.")
-            if (slot >= (InventoryUI.inventoryViewing[player]!!.size - 9)) {
+            if (slot >= (InventoryUI.openingInventory[player]!!.size - 9)) {
                 error("无效的Slot.")
-            } else if ((InventoryUI.inventoryViewing[player]?.getItem(slot)?.getItemTag()?.getDeep("pack.type")
+            } else if ((InventoryUI.openingInventory[player]?.getItem(slot)?.getItemTag()?.getDeep("pack.type")
                     ?: error("该Slot下的物品无法被解锁.")) != ItemTagData("unlock")
             ) {
                 error("该Slot下的物品无法被解锁.")
             } else return CompletableFuture.completedFuture(
-                InventoryUI.inventoryViewing[player]?.setItem(
+                InventoryUI.openingInventory[player]?.setItem(
                     slot,
                     XMaterial.AIR.parseItem()
                 )
@@ -37,7 +36,7 @@ class ActionUnlock {
 
     companion object {
         /**
-         * packViewing unlock slot material
+         * openingPack unlock slot material
          */
         @KetherParser(["unlock"], shared = true)
         fun parser() = scriptParser {

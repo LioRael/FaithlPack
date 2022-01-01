@@ -19,7 +19,7 @@ object InventoryOpen {
             return
         }
         val player = e.player as Player
-        if (InventoryUI.inventoryViewing[player] != null) {
+        if (InventoryUI.openingInventory[player] != null) {
             return
         }
         for (item in e.inventory.storageContents) {

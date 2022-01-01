@@ -12,8 +12,11 @@ abstract class InventoryUI {
     abstract fun open(player: Player, page: Int)
 
     companion object {
-        val inventoryViewing = mutableMapOf<Player, Inventory?>()
-        val packViewing = mutableMapOf<Player, Pack?>()
-        val packPageViewing = mutableMapOf<Player, Int?>()
+
+        val openingInventory = mutableMapOf<Player, Inventory?>()
+        val openingPack = mutableMapOf<Player, Pack?>()
+        val openingPage = mutableMapOf<Player, Int?>()
+
     }
+
 }

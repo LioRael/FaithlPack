@@ -21,7 +21,6 @@ taboolib {
     classifier = null
     version = "6.0.7-6"
     description {
-        desc("新时代仓库插件")
         contributors {
             name("Leosouthey")
         }
@@ -44,7 +43,6 @@ repositories {
 }
 
 dependencies {
-
     compileOnly("ink.ptms.core:v11800:11800:api")
     compileOnly("ink.ptms.core:v11800:11800:mapped")
     compileOnly("ink.ptms.core:v11800:11800:universal")

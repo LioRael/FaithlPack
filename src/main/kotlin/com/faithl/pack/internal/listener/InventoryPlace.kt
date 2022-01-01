@@ -5,8 +5,6 @@ import com.faithl.pack.common.util.condition
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryDragEvent
-import org.bukkit.inventory.Inventory
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.platform.util.isAir
 import taboolib.platform.util.sendLang
@@ -25,13 +23,13 @@ object InventoryPlace {
         if (e.clickedInventory != player.inventory) {
             return
         }
-        if (InventoryUI.inventoryViewing[player] == null) {
+        if (InventoryUI.openingInventory[player] == null) {
             return
         }
-        if (InventoryUI.inventoryViewing[player] != e.inventory) {
+        if (InventoryUI.openingInventory[player] != e.inventory) {
             return
         }
-        val pack = InventoryUI.packViewing[player]
+        val pack = InventoryUI.openingPack[player]
         val itemStack = player.inventory.getItem(e.slot) ?: return
         if (itemStack.isAir()) {
             return

@@ -21,10 +21,10 @@ object InventoryClick {
             return
         }
         val player = e.whoClicked
-        if (InventoryUI.inventoryViewing[player] == null) {
+        if (InventoryUI.openingInventory[player] == null) {
             return
         }
-        if (InventoryUI.inventoryViewing[player] != e.inventory) {
+        if (InventoryUI.openingInventory[player] != e.inventory) {
             return
         }
         val item = e.currentItem ?: return
@@ -32,11 +32,11 @@ object InventoryClick {
             return
         }
         val type = item.getItemTag().getDeep("pack.type") ?: return
-        val pack = InventoryUI.packViewing[player]
+        val pack = InventoryUI.openingPack[player]
         e.isCancelled = true
         when (type.asString()) {
             "page" -> {
-                val page = InventoryUI.packPageViewing[player]!!
+                val page = InventoryUI.openingPage[player]!!
                 if (e.isLeftClick) {
                     PackUI(pack!!).open(player as Player, page + 1)
                 } else if (e.isRightClick) {

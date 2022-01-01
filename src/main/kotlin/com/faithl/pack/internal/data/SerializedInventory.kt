@@ -1,5 +1,7 @@
 package com.faithl.pack.internal.data;
 
+import com.faithl.pack.api.FaithlPackAPI
+import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.inventory.Pack
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
@@ -22,6 +24,7 @@ data class SerializedInventory(val player: Player) {
     }
 
     companion object {
+
         val instances: MutableMap<Player, SerializedInventory> = mutableMapOf()
 
         fun getInstance(player: Player): SerializedInventory {
@@ -31,11 +34,21 @@ data class SerializedInventory(val player: Player) {
         @SubscribeEvent
         fun e(e: PlayerQuitEvent) {
             instances.remove(e.player)
+            instances[e.player]!!.inventories.forEach { (packData, inventory) ->
+                packData.forEach { (pack, page) ->
+                    FaithlPackAPI.setPack(e.player, pack, page, inventory)
+                }
+            }
         }
 
         @SubscribeEvent
         fun e(e: PlayerKickEvent) {
             instances.remove(e.player)
+            instances[e.player]!!.inventories.forEach { (packData, inventory) ->
+                packData.forEach { (pack, page) ->
+                    FaithlPackAPI.setPack(e.player, pack, page, inventory)
+                }
+            }
         }
 
         @SubscribeEvent

@@ -43,7 +43,7 @@ object FaithlPack: Plugin() {
     }
 
     override fun onDisable() {
-        InventoryUI.inventoryViewing.forEach {
+        InventoryUI.openingInventory.forEach {
             it.key.closeInventory()
         }
         console().sendLang("Plugin-Disabled")

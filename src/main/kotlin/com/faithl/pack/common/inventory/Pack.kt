@@ -22,12 +22,4 @@ class Pack(root: ConfigurationSection?) {
     companion object {
         val packList = mutableListOf<Pack>()
     }
-
-    fun save(player: Player) {
-        FaithlPackAPI.setPack(
-            player, InventoryUI.packViewing[player]!!, InventoryUI.packPageViewing[player]!!,
-            InventoryUI.inventoryViewing[player]!!
-        )
-    }
-
 }

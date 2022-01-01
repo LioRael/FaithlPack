@@ -8,16 +8,11 @@ import com.faithl.pack.common.inventory.PackUI
 import com.faithl.pack.common.util.condition
 import com.faithl.pack.common.util.putItem
 import com.faithl.pack.internal.data.Database
-import ink.ptms.zaphkiel.ZaphkielAPI
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityPickupItemEvent
-import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.util.asList
 import taboolib.library.xseries.XSound
 import taboolib.module.nms.getName
-import taboolib.platform.util.hasLore
-import taboolib.platform.util.hasName
 import taboolib.platform.util.sendLang
 
 object ItemPickUp {
@@ -42,14 +37,16 @@ object ItemPickUp {
             }
             if (condition(pack, e.item.itemStack)) {
                 val itemStack = e.item.itemStack.clone()
-                PackPickupEvent(player, pack).call()
                 page@ for (page in 1..pack.inventoryConfig!!.getInt("pages")) {
+                    println(itemStack.amount)
+                    PackPickupEvent(player, pack, page).call()
                     if (pack.ui is PackUI) {
-                        if (InventoryUI.inventoryViewing[player] != null) {
+                        if (InventoryUI.openingInventory[player] != null) {
                             player.closeInventory()
                         }
                         val newPack = (pack.ui as PackUI).getData(player, page)
                         newPack!!.putItem(itemStack)
+//                        val itemStackConsumed =
                         FaithlPackAPI.setPack(player, pack, page, newPack)
                         if (itemStack.amount == 0) {
                             break@page

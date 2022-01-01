@@ -2,7 +2,6 @@ package com.faithl.pack.internal.listener
 
 import com.faithl.pack.api.event.PackCloseEvent
 import com.faithl.pack.common.inventory.InventoryUI
-import com.faithl.pack.common.inventory.PackUI
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent
 import taboolib.common.platform.event.SubscribeEvent
@@ -14,18 +13,22 @@ object InventoryClose {
         if (e.player !is Player) {
             return
         }
-        val viewer = e.player as Player
-        if (InventoryUI.inventoryViewing[viewer] == null) {
+        val player = e.player as Player
+        if (InventoryUI.openingInventory[player] == null) {
             return
         }
-        if (InventoryUI.inventoryViewing[viewer] != e.inventory) {
+        if (InventoryUI.openingInventory[player] != e.inventory) {
             return
         }
-        PackCloseEvent(viewer, InventoryUI.packViewing[viewer]!!, InventoryUI.packPageViewing[viewer]!!).call()
-        InventoryUI.packViewing[viewer]!!.save(viewer)
-        InventoryUI.inventoryViewing[viewer] = null
-        InventoryUI.packViewing[viewer] = null
-        InventoryUI.packPageViewing[viewer] = null
+        val event = PackCloseEvent(
+            player, InventoryUI.openingPack[player]!!, InventoryUI.openingPage[player]!!,
+            InventoryUI.openingInventory[player]!!
+        )
+        event.call()
+        println(2)
+        InventoryUI.openingInventory[player] = null
+        InventoryUI.openingPack[player] = null
+        InventoryUI.openingPage[player] = null
     }
 
 }

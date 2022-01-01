@@ -2,8 +2,6 @@ package com.faithl.pack.common.inventory
 
 import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.api.event.PackOpenEvent
-import com.faithl.pack.common.util.deserializeToInventory
-import com.faithl.pack.internal.data.Database
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
@@ -34,10 +32,10 @@ class PackUI(val pack: Pack) : InventoryUI() {
 
     override fun open(player: Player, page: Int) {
         val ui = getData(player, page) ?: return
+        openingInventory[player] = ui
+        openingPack[player] = pack
+        openingPage[player] = page
         PackOpenEvent(player, pack, page).call()
-        inventoryViewing[player] = ui
-        packViewing[player] = pack
-        packPageViewing[player] = page
         player.openInventory(ui)
     }
 
