@@ -12,7 +12,7 @@ abstract class Database {
 
     abstract fun setPack(player: Player, pack: Pack, page: Int, value: String)
 
-    abstract fun getAutoPickup(player: Player, pack: Pack) : Boolean
+    abstract fun getAutoPickup(player: Player, pack: Pack): Boolean
 
     abstract fun setAutoPickup(player: Player, pack: Pack, autoPick: Boolean)
 
@@ -37,10 +37,10 @@ abstract class Database {
         }
     }
 
-    fun getDefaultAutoPickup(player: Player, pack:Pack):Boolean{
+    fun getDefaultAutoPickup(player: Player, pack: Pack): Boolean {
         val default = pack.sort?.getBoolean("auto-pickup.player-default-enabled")
-        if (default != null){
-            INSTANCE.setAutoPickup(player,pack,default)
+        if (default != null) {
+            INSTANCE.setAutoPickup(player, pack, default)
             return default
         }
         return false

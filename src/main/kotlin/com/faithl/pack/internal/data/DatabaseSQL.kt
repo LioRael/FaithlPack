@@ -6,7 +6,7 @@ import com.faithl.pack.common.util.deserializeToInventory
 import org.bukkit.entity.Player
 import taboolib.module.database.*
 
-class DatabaseSQL: Database() {
+class DatabaseSQL : Database() {
     val host = FaithlPack.setting.getHost("Database.source.MYSQL")
     val name = "faithlpack"
 
@@ -26,7 +26,7 @@ class DatabaseSQL: Database() {
         }
     }
 
-    val tableSettings = Table("${name}_setting",host){
+    val tableSettings = Table("${name}_setting", host) {
         add { id() }
         add("player") {
             type(ColumnTypeSQL.VARCHAR, 36)
@@ -49,9 +49,10 @@ class DatabaseSQL: Database() {
     override fun getPack(player: Player, pack: Pack) {
         return tablePack.select(dataSource) {
             where("player" eq player.uniqueId.toString() and ("pack" eq pack.name!!))
-            rows("value","page")
+            rows("value", "page")
         }.forEach {
-            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to getInt("page"))] = getString("value").deserializeToInventory()
+            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to getInt("page"))] =
+                getString("value").deserializeToInventory()
         }
     }
 
@@ -74,7 +75,7 @@ class DatabaseSQL: Database() {
             rows("auto-pickup")
         }.firstOrNull {
             getBoolean("auto-pickup")
-        } ?: getDefaultAutoPickup(player,pack)
+        } ?: getDefaultAutoPickup(player, pack)
     }
 
     override fun setAutoPickup(player: Player, pack: Pack, autoPick: Boolean) {

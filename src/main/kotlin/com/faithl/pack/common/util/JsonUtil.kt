@@ -13,14 +13,14 @@ import java.net.URLConnection
  * @constructor Create empty Json util
  */
 object JsonUtil {
-    fun loadJson(url: String?): String{
+    fun loadJson(url: String?): String {
         val json = StringBuilder()
         try {
             val urlObject = URL(url)
             val uc: URLConnection = urlObject.openConnection()
             val `in` = BufferedReader(InputStreamReader(uc.getInputStream()))
-            var inputLine:String?
-            while (`in`.readLine().also {inputLine = it } != null) {
+            var inputLine: String?
+            while (`in`.readLine().also { inputLine = it } != null) {
                 json.append(inputLine)
             }
             `in`.close()

@@ -18,31 +18,31 @@ import taboolib.platform.util.isAir
  * @time 2021/12/4-19:04
  * @param item 物品堆
  */
-fun Inventory.putItem(item: ItemStack):ItemStack{
-    if (contents.isNotEmpty()){
-        for (inventoryItem in contents){
-            if (inventoryItem == null){
+fun Inventory.putItem(item: ItemStack): ItemStack {
+    if (contents.isNotEmpty()) {
+        for (inventoryItem in contents) {
+            if (inventoryItem == null) {
                 continue
             }
-            if (inventoryItem.getItemTag() == item.getItemTag()){
+            if (inventoryItem.getItemTag() == item.getItemTag()) {
                 val remainSize = inventoryItem.type.maxStackSize - inventoryItem.amount
                 if (remainSize > 0) {
                     val itemCache = item.clone()
-                    if (itemCache.amount >= remainSize){
+                    if (itemCache.amount >= remainSize) {
                         itemCache.amount = remainSize
                     }
                     addItem(itemCache)
                     item.amount -= itemCache.amount
                 }
-                if (item.amount == 0){
+                if (item.amount == 0) {
                     break
                 }
             }
         }
     }
-    if (item.amount > 0){
-        for (slot in 0 until size){
-            if (getItem(slot).isAir()){
+    if (item.amount > 0) {
+        for (slot in 0 until size) {
+            if (getItem(slot).isAir()) {
                 addItem(item)
                 item.amount = 0
                 break
@@ -52,32 +52,32 @@ fun Inventory.putItem(item: ItemStack):ItemStack{
     return item
 }
 
-fun condition(pack: Pack, item:ItemStack):Boolean{
+fun condition(pack: Pack, item: ItemStack): Boolean {
     val conditions = pack.sort?.getConfigurationSection("condition") ?: return true
-    when(conditions.getString("mode")){
+    when (conditions.getString("mode")) {
         "name" -> {
-            pack.sort["condition.value"]?.asList()?.forEach{ value ->
-                if (item.getName().contains(value)){
+            pack.sort["condition.value"]?.asList()?.forEach { value ->
+                if (item.getName().contains(value)) {
                     return true
                 }
             }
         }
         "lore" -> {
-            if (item.itemMeta == null){
+            if (item.itemMeta == null) {
                 return false
             }
-            pack.sort["condition.value"]?.asList()?.forEach{ value ->
-                if (item.hasLore(value)){
+            pack.sort["condition.value"]?.asList()?.forEach { value ->
+                if (item.hasLore(value)) {
                     return true
                 }
             }
         }
-        "zap","zaphkiel" -> {
+        "zap", "zaphkiel" -> {
             val itemStream = ZaphkielAPI.read(item)
-            if (itemStream.isExtension()){
-                val type = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?:return false
-                pack.sort["condition.value"]?.asList()?.forEach{ value ->
-                    if (type == value){
+            if (itemStream.isExtension()) {
+                val type = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?: return false
+                pack.sort["condition.value"]?.asList()?.forEach { value ->
+                    if (type == value) {
                         return true
                     }
                 }

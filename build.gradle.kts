@@ -44,10 +44,10 @@ repositories {
 }
 
 dependencies {
-    
-    implementation("ink.ptms.core:v11800:11800:api")
-    implementation("ink.ptms.core:v11800:11800:mapped")
-    implementation("ink.ptms.core:v11800:11800:universal")
+
+    compileOnly("ink.ptms.core:v11800:11800:api")
+    compileOnly("ink.ptms.core:v11800:11800:mapped")
+    compileOnly("ink.ptms.core:v11800:11800:universal")
     compileOnly("com.alibaba:fastjson:1.2.79")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
     compileOnly("ink.ptms:Zaphkiel:1.7.6")

@@ -12,36 +12,37 @@ import taboolib.common.platform.event.SubscribeEvent
  * @author Leosouthey
  * @time 2021/12/10-20:15
  **/
-data class SerializedInventory(val player:Player) {
-    val inventories = mutableMapOf<MutableMap<Pack,Int>, Inventory>()
+data class SerializedInventory(val player: Player) {
+
+    val inventories = mutableMapOf<MutableMap<Pack, Int>, Inventory>()
     val autoPickup = mutableMapOf<Pack, Boolean>()
 
     init {
         instances[player] = this
     }
 
-    companion object{
-        val instances:MutableMap<Player,SerializedInventory> = mutableMapOf()
+    companion object {
+        val instances: MutableMap<Player, SerializedInventory> = mutableMapOf()
 
-        fun getInstance(player:Player):SerializedInventory{
+        fun getInstance(player: Player): SerializedInventory {
             return instances[player]!!
         }
 
         @SubscribeEvent
-        fun e(e:PlayerQuitEvent){
+        fun e(e: PlayerQuitEvent) {
             instances.remove(e.player)
         }
 
         @SubscribeEvent
-        fun e(e:PlayerKickEvent){
+        fun e(e: PlayerKickEvent) {
             instances.remove(e.player)
         }
 
         @SubscribeEvent
-        fun e(e: PlayerJoinEvent){
+        fun e(e: PlayerJoinEvent) {
             SerializedInventory(e.player)
-            Pack.packList.forEach{
-                Database.INSTANCE.getPack(e.player,it)
+            Pack.packList.forEach {
+                Database.INSTANCE.getPack(e.player, it)
             }
         }
     }

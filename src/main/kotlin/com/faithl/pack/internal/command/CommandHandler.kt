@@ -20,6 +20,7 @@ import taboolib.platform.util.asLangText
  */
 @CommandHeader(name = "faithlpack", aliases = ["fpack"], permission = "faithlpack.access")
 object CommandHandler {
+
     @CommandBody(permission = "faithlpack.reload")
     val reload = CommandReload.command
 
@@ -30,7 +31,7 @@ object CommandHandler {
     val bind = CommandBind.command
 
     @CommandBody(permission = "faithlpack.access")
-    val main = mainCommand{
+    val main = mainCommand {
         execute<CommandSender> { sender, _, argument ->
             if (argument.isEmpty()) {
                 generateMainHelper(sender)
@@ -40,22 +41,24 @@ object CommandHandler {
     }
 
     @CommandBody(permission = "faithlpack.access")
-    val help = subCommand{
+    val help = subCommand {
         execute<CommandSender> { sender, _, _ ->
             generateMainHelper(sender)
         }
     }
 
-    private fun generateMainHelper(sender: CommandSender){
+    private fun generateMainHelper(sender: CommandSender) {
         val proxySender = adaptCommandSender(sender)
         proxySender.sendMessage("")
         TellrawJson()
             .append("  ").append("§bFaithlPack")
             .hoverText("§7FaithlPack is modern and advanced Minecraft pack-plugin")
             .append(" ").append("§f${FaithlPack.plugin.description.version}")
-            .hoverText("""
+            .hoverText(
+                """
                 §7Plugin version: §b${FaithlPack.plugin.description.version}
-            """.trimIndent()).sendTo(proxySender)
+            """.trimIndent()
+            ).sendTo(proxySender)
         proxySender.sendMessage("")
         TellrawJson()
             .append("  §7${sender.asLangText("Command-Help-Type")}: ").append("§f/FaithlPack §8[...]")

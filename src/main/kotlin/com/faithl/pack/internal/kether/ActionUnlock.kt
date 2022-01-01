@@ -19,13 +19,18 @@ class ActionUnlock {
 
         override fun run(frame: ScriptFrame): CompletableFuture<Unit> {
             val player = frame.script().sender?.castSafely<Player>() ?: error("No player selected.")
-            if (slot >= (InventoryUI.inventoryViewing[player]!!.size - 9)){
+            if (slot >= (InventoryUI.inventoryViewing[player]!!.size - 9)) {
                 error("无效的Slot.")
-            } else if((InventoryUI.inventoryViewing[player]?.getItem(slot)?.getItemTag()?.getDeep("pack.type")
+            } else if ((InventoryUI.inventoryViewing[player]?.getItem(slot)?.getItemTag()?.getDeep("pack.type")
                     ?: error("该Slot下的物品无法被解锁.")) != ItemTagData("unlock")
-            ){
+            ) {
                 error("该Slot下的物品无法被解锁.")
-            } else return CompletableFuture.completedFuture(InventoryUI.inventoryViewing[player]?.setItem(slot,XMaterial.AIR.parseItem()))
+            } else return CompletableFuture.completedFuture(
+                InventoryUI.inventoryViewing[player]?.setItem(
+                    slot,
+                    XMaterial.AIR.parseItem()
+                )
+            )
         }
 
     }

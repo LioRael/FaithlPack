@@ -9,6 +9,7 @@ import taboolib.common.platform.command.subCommand
 import taboolib.module.lang.sendLang
 
 object CommandReload {
+
     val command = subCommand {
         execute<ProxyCommandSender> { sender, _, _ ->
             Pack.packList.clear()
@@ -20,4 +21,5 @@ object CommandReload {
             sender.sendLang("Command-Reload-Info")
         }
     }
+
 }

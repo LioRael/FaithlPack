@@ -17,21 +17,21 @@ object FaithlPackAPI {
      *
      * @param name 仓库名
      */
-    fun getPack(name:String): Pack? {
+    fun getPack(name: String): Pack? {
         return Pack.packList.find {
             it.name == name
         }
     }
 
     /**
-     * TabooLib ConfigurationSection创建仓库的解决方案
+     * ConfigurationSection创建仓库
      *
      * @param root 仓库配置
      */
-    fun createPack(root: ConfigurationSection){
-        if (getPack(root.getString("Name")!!) == null){
+    fun createPack(root: ConfigurationSection) {
+        if (getPack(root.getString("Name")!!) == null) {
             Pack(root)
-        }else{
+        } else {
             console().sendMessage("&c[FaithlPack] The same name of pack already exists.")
         }
     }
@@ -41,7 +41,7 @@ object FaithlPackAPI {
      *
      * @param pack 仓库
      */
-    fun deletePack(pack:Pack){
+    fun deletePack(pack: Pack) {
         Pack.packList.remove(pack)
     }
 
@@ -53,11 +53,12 @@ object FaithlPackAPI {
      * @param page 页数
      * @param value 仓库值
      */
-    fun setPack(player: Player,pack: Pack,page: Int, value: String) {
-        if (SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] == null){
-            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] = value.deserializeToInventory()
+    fun setPack(player: Player, pack: Pack, page: Int, value: String) {
+        if (SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] == null) {
+            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] =
+                value.deserializeToInventory()
         }
-        Database.INSTANCE.setPack(player,pack,page,value)
+        Database.INSTANCE.setPack(player, pack, page, value)
     }
 
     /**
@@ -68,11 +69,11 @@ object FaithlPackAPI {
      * @param page 页数
      * @param value Bukkit容器
      */
-    fun setPack(player: Player,pack: Pack,page: Int, value: Inventory) {
-        if (SerializedInventory(player).inventories[mutableMapOf(pack to page)] == null){
+    fun setPack(player: Player, pack: Pack, page: Int, value: Inventory) {
+        if (SerializedInventory(player).inventories[mutableMapOf(pack to page)] == null) {
             SerializedInventory(player).inventories[mutableMapOf(pack to page)] = value
         }
-        Database.INSTANCE.setPack(player,pack,page,value.serializeToString())
+        Database.INSTANCE.setPack(player, pack, page, value.serializeToString())
     }
 
     /**
@@ -83,9 +84,9 @@ object FaithlPackAPI {
      * @param page 页数
      * @return Inventory数据
      */
-    fun getPackInventory(player: Player,pack: Pack,page: Int):Inventory?{
-        if (SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] == null){
-            Database.INSTANCE.getPack(player,pack)
+    fun getPackInventory(player: Player, pack: Pack, page: Int): Inventory? {
+        if (SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)] == null) {
+            Database.INSTANCE.getPack(player, pack)
         }
         return SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to page)]
     }
@@ -95,7 +96,7 @@ object FaithlPackAPI {
      *
      * @return 仓库列表
      */
-    fun getPackList():List<Pack>{
+    fun getPackList(): List<Pack> {
         return Pack.packList
     }
 }

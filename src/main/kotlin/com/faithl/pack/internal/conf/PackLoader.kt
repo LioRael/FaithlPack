@@ -35,7 +35,7 @@ object PackLoader {
         }
         val tasks = mutableListOf<File>().also { tasks ->
             files.forEach { file ->
-                if (!tasks.any { it.nameWithoutExtension == file.nameWithoutExtension } && file.extension=="yml")
+                if (!tasks.any { it.nameWithoutExtension == file.nameWithoutExtension } && file.extension == "yml")
                     tasks.add(file)
             }
         }

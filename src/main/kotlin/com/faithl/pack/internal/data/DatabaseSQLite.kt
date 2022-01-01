@@ -7,7 +7,7 @@ import taboolib.common.io.newFile
 import taboolib.common.platform.function.getDataFolder
 import taboolib.module.database.*
 
-class DatabaseSQLite: Database() {
+class DatabaseSQLite : Database() {
     val host = newFile(getDataFolder(), "data.db").getHost()
 
     val tablePack = Table("faithlpack_data", host) {
@@ -25,7 +25,7 @@ class DatabaseSQLite: Database() {
         }
     }
 
-    val tableSettings = Table("faithlpack_setting",host){
+    val tableSettings = Table("faithlpack_setting", host) {
         add("player") {
             type(ColumnTypeSQLite.TEXT, 36)
         }
@@ -44,12 +44,13 @@ class DatabaseSQLite: Database() {
         tableSettings.createTable(dataSource)
     }
 
-    override fun getPack(player: Player, pack: Pack){
+    override fun getPack(player: Player, pack: Pack) {
         return tablePack.select(dataSource) {
             where("player" eq player.uniqueId.toString() and ("pack" eq pack.name!!))
-            rows("value","page")
+            rows("value", "page")
         }.forEach {
-            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to getInt("page"))] = getString("value").deserializeToInventory()
+            SerializedInventory.getInstance(player).inventories[mutableMapOf(pack to getInt("page"))] =
+                getString("value").deserializeToInventory()
         }
     }
 
@@ -61,7 +62,7 @@ class DatabaseSQLite: Database() {
             }
         } else {
             tablePack.insert(dataSource, "player", "pack", "page", "value") {
-                value(player.uniqueId.toString(), pack.name!!,page, value)
+                value(player.uniqueId.toString(), pack.name!!, page, value)
             }
         }
     }
@@ -72,7 +73,7 @@ class DatabaseSQLite: Database() {
             rows("auto-pickup")
         }.firstOrNull {
             getBoolean("auto-pickup")
-        } ?: getDefaultAutoPickup(player,pack)
+        } ?: getDefaultAutoPickup(player, pack)
     }
 
     override fun setAutoPickup(player: Player, pack: Pack, autoPick: Boolean) {

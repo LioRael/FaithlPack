@@ -16,48 +16,56 @@ import taboolib.platform.util.sendLang
 object InventoryClick {
 
     @SubscribeEvent
-    fun e(e: InventoryClickEvent){
-        if (e.whoClicked !is Player){
+    fun e(e: InventoryClickEvent) {
+        if (e.whoClicked !is Player) {
             return
         }
         val player = e.whoClicked
-        if (InventoryUI.inventoryViewing[player] == null){
+        if (InventoryUI.inventoryViewing[player] == null) {
             return
         }
-        if (InventoryUI.inventoryViewing[player] != e.inventory){
+        if (InventoryUI.inventoryViewing[player] != e.inventory) {
             return
         }
         val item = e.currentItem ?: return
-        if (item.isAir()){
+        if (item.isAir()) {
             return
         }
         val type = item.getItemTag().getDeep("pack.type") ?: return
         val pack = InventoryUI.packViewing[player]
         e.isCancelled = true
-        when(type.asString()){
+        when (type.asString()) {
             "page" -> {
                 val page = InventoryUI.packPageViewing[player]!!
-                if (e.isLeftClick){
+                if (e.isLeftClick) {
                     PackUI(pack!!).open(player as Player, page + 1)
-                }else if (e.isRightClick){
+                } else if (e.isRightClick) {
                     PackUI(pack!!).open(player as Player, page - 1)
                 }
             }
             "unlock" -> {
-                if (e.isLeftClick){
-                    KetherShell.eval(source = pack!!.inventoryConfig!!["items.unlock.action.left-click"]?.toString()
-                        ?.replace("@clickedSlot", e.slot.toString(),true)?.asList() ?: return,sender = adaptPlayer(player),namespace = listOf("faithlpack", "faithlpack-internal"))
-                }else if (e.isRightClick){
-                    KetherShell.eval(source = pack!!.inventoryConfig!!["items.unlock.action.right-click"]?.toString()
-                        ?.replace("@clickedSlot", e.slot.toString(),true)?.asList() ?: return,sender = adaptPlayer(player),namespace = listOf("faithlpack", "faithlpack-internal"))
+                if (e.isLeftClick) {
+                    KetherShell.eval(
+                        source = pack!!.inventoryConfig!!["items.unlock.action.left-click"]?.toString()
+                            ?.replace("@clickedSlot", e.slot.toString(), true)?.asList() ?: return,
+                        sender = adaptPlayer(player),
+                        namespace = listOf("faithlpack", "faithlpack-internal")
+                    )
+                } else if (e.isRightClick) {
+                    KetherShell.eval(
+                        source = pack!!.inventoryConfig!!["items.unlock.action.right-click"]?.toString()
+                            ?.replace("@clickedSlot", e.slot.toString(), true)?.asList() ?: return,
+                        sender = adaptPlayer(player),
+                        namespace = listOf("faithlpack", "faithlpack-internal")
+                    )
                 }
             }
             "setting.auto-pickup" -> {
-                if (Database.INSTANCE.getAutoPickup(player as Player, pack!!)){
-                    Database.INSTANCE.setAutoPickup(player,pack,false)
+                if (Database.INSTANCE.getAutoPickup(player as Player, pack!!)) {
+                    Database.INSTANCE.setAutoPickup(player, pack, false)
                     player.sendLang("Pack-Auto-Pick-Off", pack.name!!)
-                }else{
-                    Database.INSTANCE.setAutoPickup(player,pack,true)
+                } else {
+                    Database.INSTANCE.setAutoPickup(player, pack, true)
                     player.sendLang("Pack-Auto-Pick-On", pack.name!!)
                 }
             }

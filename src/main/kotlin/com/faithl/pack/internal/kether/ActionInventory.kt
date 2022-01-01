@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture
  **/
 class ActionInventory {
 
-    class Has(val type:String,val value: ParsedAction<String>,val amount:Int) : ScriptAction<Boolean>() {
+    class Has(val type: String, val value: ParsedAction<String>, val amount: Int) : ScriptAction<Boolean>() {
 
         override fun run(frame: ScriptFrame): CompletableFuture<Boolean> {
             val player = frame.script().sender?.castSafely<Player>() ?: error("No player selected.")
@@ -40,7 +40,7 @@ class ActionInventory {
         }
     }
 
-    class Take(val type: String, val value: ParsedAction<String>, val amount:Int) : ScriptAction<Boolean>() {
+    class Take(val type: String, val value: ParsedAction<String>, val amount: Int) : ScriptAction<Boolean>() {
 
         override fun run(frame: ScriptFrame): CompletableFuture<Boolean> {
             val player = frame.script().sender?.castSafely<Player>() ?: error("No player selected.")
@@ -68,8 +68,8 @@ class ActionInventory {
         @KetherParser(["inventory"], shared = true)
         fun parser() = scriptParser {
             it.switch {
-                case("has"){ Has(it.nextToken(),it.nextAction(),it.nextInt()) }
-                case("take"){ Take(it.nextToken(),it.nextAction(),it.nextInt()) }
+                case("has") { Has(it.nextToken(), it.nextAction(), it.nextInt()) }
+                case("take") { Take(it.nextToken(), it.nextAction(), it.nextInt()) }
             }
         }
     }

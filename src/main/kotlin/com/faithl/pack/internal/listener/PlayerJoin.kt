@@ -7,8 +7,8 @@ import taboolib.common.platform.event.SubscribeEvent
 object PlayerJoin {
 
     @SubscribeEvent
-    fun e(e:PlayerJoinEvent){
-        if (e.player.isOp){
+    fun e(e: PlayerJoinEvent) {
+        if (e.player.isOp) {
             checkUpdate(e.player)
         }
     }

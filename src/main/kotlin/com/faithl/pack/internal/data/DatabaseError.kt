@@ -3,7 +3,7 @@ package com.faithl.pack.internal.data
 import com.faithl.pack.common.inventory.Pack
 import org.bukkit.entity.Player
 
-class DatabaseError(val cause: Throwable): Database(){
+class DatabaseError(val cause: Throwable) : Database() {
     init {
         cause.printStackTrace()
     }

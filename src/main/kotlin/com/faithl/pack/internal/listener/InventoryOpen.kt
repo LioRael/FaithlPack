@@ -14,22 +14,22 @@ import taboolib.module.nms.getItemTag
 object InventoryOpen {
 
     @SubscribeEvent
-    fun e(e:InventoryOpenEvent){
-        if (e.player !is Player){
+    fun e(e: InventoryOpenEvent) {
+        if (e.player !is Player) {
             return
         }
         val player = e.player as Player
-        if (InventoryUI.inventoryViewing[player] != null){
+        if (InventoryUI.inventoryViewing[player] != null) {
             return
         }
-        for (item in e.inventory.storageContents){
-            if (item == null){
+        for (item in e.inventory.storageContents) {
+            if (item == null) {
                 continue
             }
             val type = item.getItemTag().getDeep("pack.type") ?: continue
-            if (type.asString() == "bind"){
+            if (type.asString() == "bind") {
                 e.isCancelled = true
-                FaithlPackAPI.getPack(item.getItemTag().getDeep("pack.bind").asString())?.ui?.open(player,1)
+                FaithlPackAPI.getPack(item.getItemTag().getDeep("pack.bind").asString())?.ui?.open(player, 1)
                 break
             }
         }

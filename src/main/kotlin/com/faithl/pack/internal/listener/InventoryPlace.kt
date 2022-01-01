@@ -17,34 +17,34 @@ import taboolib.platform.util.sendLang
 object InventoryPlace {
 
     @SubscribeEvent
-    fun e(e: InventoryClickEvent){
-        if (e.whoClicked !is Player){
+    fun e(e: InventoryClickEvent) {
+        if (e.whoClicked !is Player) {
             return
         }
         val player = e.whoClicked as Player
-        if (e.clickedInventory != player.inventory){
+        if (e.clickedInventory != player.inventory) {
             return
         }
-        if (InventoryUI.inventoryViewing[player] == null){
+        if (InventoryUI.inventoryViewing[player] == null) {
             return
         }
-        if (InventoryUI.inventoryViewing[player] != e.inventory){
+        if (InventoryUI.inventoryViewing[player] != e.inventory) {
             return
         }
         val pack = InventoryUI.packViewing[player]
         val itemStack = player.inventory.getItem(e.slot) ?: return
-        if (itemStack.isAir()){
+        if (itemStack.isAir()) {
             return
         }
-        if (pack?.sort?.getBoolean("must-condition") == true){
+        if (pack?.sort?.getBoolean("must-condition") == true) {
             if (e.action == InventoryAction.PICKUP_ALL
                 || e.action == InventoryAction.PICKUP_HALF
                 || e.action == InventoryAction.PLACE_ONE
                 || e.action == InventoryAction.PICKUP_SOME
                 || e.action == InventoryAction.MOVE_TO_OTHER_INVENTORY
                 || e.action == InventoryAction.SWAP_WITH_CURSOR
-            ){
-                if (!condition(pack, itemStack)){
+            ) {
+                if (!condition(pack, itemStack)) {
                     player.sendLang("Pack-Put-Error", pack.name!!)
                     e.isCancelled = true
                 }
