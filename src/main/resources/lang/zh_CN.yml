@@ -5,6 +5,7 @@
 
 Plugin-Enabled: '&7[&bFaithlPack&7] &r插件已加载,当前版本:&b{0}&r,Kotlin版本:&b{1}&r.'
 Plugin-Disabled: '&7[&bFaithlPack&7] &r插件已卸载,感谢你的使用.'
+Plugin-Update: '&7[&bFaithlPack&7] &r发现新版本, 当前版本 &b{0}&r, 最新版本 &b{1}&r, 插件地址 &b{2}&r。'
 
 Command-Help-Type: '命令'
 Command-Help-Args: '参数'

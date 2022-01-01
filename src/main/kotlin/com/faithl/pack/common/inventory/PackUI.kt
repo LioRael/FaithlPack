@@ -51,7 +51,7 @@ class PackUI(val pack: Pack) : InventoryUI() {
         val rows = pack.inventoryConfig!!.getInt("rows")
         if (pack.enabledLock) {
             val unlockItemStack = getNBTItemStack(player, page, "unlock")
-            for (slot in 0 + defaultSize until (rows - 1) * 9) {
+            for (slot in defaultSize until (rows - 1) * 9) {
                 packInv.setItem(slot, unlockItemStack)
             }
         }
@@ -126,9 +126,11 @@ class PackUI(val pack: Pack) : InventoryUI() {
             updateItems(player, page, ui)
         } else {
             //初始化默认槽位
-            val default = pack.inventoryConfig.getInt("default-size") - page * 45
+            val default = pack.inventoryConfig.getInt("default-size") - (page - 1) * 45
             if (default > 0) {
                 initItems(player, page, ui, default)
+            } else {
+                initItems(player, page, ui)
             }
         }
         return ui

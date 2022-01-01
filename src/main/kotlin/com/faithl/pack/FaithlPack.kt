@@ -24,9 +24,9 @@ import taboolib.platform.util.sendLang
  * @constructor Create empty Faithl pack
  */
 @RuntimeDependency(value = "com.alibaba:fastjson:1.2.79")
-object FaithlPack: Plugin() {
+object FaithlPack : Plugin() {
 
-    @Config("settings.yml", migrate = true,autoReload = true)
+    @Config("settings.yml", migrate = true, autoReload = true)
     lateinit var setting: Configuration
         private set
 
@@ -39,7 +39,7 @@ object FaithlPack: Plugin() {
 
     override fun onEnable() {
         init()
-        console().sendLang("Plugin-Enabled",pluginVersion,KotlinVersion.CURRENT.toString())
+        console().sendLang("Plugin-Enabled", pluginVersion, KotlinVersion.CURRENT.toString())
     }
 
     override fun onDisable() {
@@ -49,7 +49,7 @@ object FaithlPack: Plugin() {
         console().sendLang("Plugin-Disabled")
     }
 
-    fun init(){
+    fun init() {
         PackLoader.loadInventories()
         checkUpdate()
     }
@@ -59,18 +59,23 @@ object FaithlPack: Plugin() {
      *
      * @param sender
      */
-    fun checkUpdate(sender: Player? = null){
-        if(!setting.getBoolean("Options.check-update"))
+    fun checkUpdate(sender: Player? = null) {
+        if (!setting.getBoolean("Options.check-update"))
             return
         val json = JsonUtil.loadJson("https://api.faithl.com/version.php?plugin=FaithlPack")
         val `object` = JSONObject.parseObject(json)
         val version = Version(`object`.getString("version"))
-        if (version > Version(pluginVersion)){
+        if (version > Version(pluginVersion)) {
             outOfDate = true
-            if (sender == null){
-                console().sendLang("Plugin-Update",pluginVersion,version)
+            if (sender == null) {
+                console().sendLang("Plugin-Update", pluginVersion, version)
             } else {
-                sender.sendLang("Plugin-Update",pluginVersion,version.source,"https://www.mcbbs.net/thread-1281714-1-1.html")
+                sender.sendLang(
+                    "Plugin-Update",
+                    pluginVersion,
+                    version.source,
+                    "https://www.mcbbs.net/thread-1281714-1-1.html"
+                )
             }
         }
     }
