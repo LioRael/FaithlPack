@@ -68,7 +68,7 @@ object FaithlPack : Plugin() {
         if (version > Version(pluginVersion)) {
             outOfDate = true
             if (sender == null) {
-                console().sendLang("Plugin-Update", pluginVersion, version)
+                console().sendLang("Plugin-Update", pluginVersion, version.source)
             } else {
                 sender.sendLang(
                     "Plugin-Update",

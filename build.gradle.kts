@@ -19,7 +19,7 @@ taboolib {
     install("module-nms")
     install("module-nms-util")
     classifier = null
-    version = "6.0.7-6"
+    version = "6.0.7-14"
     description {
         contributors {
             name("Leosouthey")
@@ -36,7 +36,7 @@ taboolib {
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://repo.tabooproject.org/storages/public/releases") }
+    maven { url = uri("https://repo.tabooproject.org/repository/releases/") }
     maven { url = uri("https://repo.pcgamingfreaks.at/repository/maven-everything") }
     maven { url = uri("https://nexus.badbones69.com/repository/maven-releases") }
     maven { url = uri("https://jitpack.io") }
