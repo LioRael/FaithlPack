@@ -15,7 +15,7 @@ import taboolib.library.xseries.XSound
 import taboolib.module.nms.getName
 import taboolib.platform.util.sendLang
 
-object ItemPickUp {
+object ItemPickup {
 
     @SubscribeEvent
     fun e(e: EntityPickupItemEvent) {
@@ -24,16 +24,17 @@ object ItemPickUp {
         }
         val player = e.entity as Player
         pack@ for (pack in Pack.packList) {
-            if (pack.sort?.getBoolean("auto-pickup.enabled") ?: return)
+            if (pack.sort?.getBoolean("auto-pickup.enabled") ?: continue) {
                 if (!Database.INSTANCE.getAutoPickup(player, pack)) {
-                    return
+                    continue
                 }
+            }
             if (pack.permission != null && !player.hasPermission(pack.permission)) {
-                return
+                continue
             }
             val autoPickupPermission = pack.sort.getString("auto-pickup.permission")
             if (autoPickupPermission != null && !player.hasPermission(autoPickupPermission)) {
-                return
+                continue
             }
             if (condition(pack, e.item.itemStack)) {
                 val itemStack = e.item.itemStack.clone()
@@ -46,7 +47,6 @@ object ItemPickUp {
                         }
                         val newPack = (pack.ui as PackUI).getData(player, page)
                         newPack!!.putItem(itemStack)
-//                        val itemStackConsumed =
                         FaithlPackAPI.setPack(player, pack, page, newPack)
                         if (itemStack.amount == 0) {
                             break@page
