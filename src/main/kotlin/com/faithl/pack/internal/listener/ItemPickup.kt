@@ -39,7 +39,6 @@ object ItemPickup {
             if (condition(pack, e.item.itemStack)) {
                 val itemStack = e.item.itemStack.clone()
                 page@ for (page in 1..pack.inventoryConfig!!.getInt("pages")) {
-                    println(itemStack.amount)
                     PackPickupEvent(player, pack, page).call()
                     if (pack.ui is PackUI) {
                         if (InventoryUI.openingInventory[player] != null) {

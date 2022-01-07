@@ -35,6 +35,7 @@ class ActionUnlock {
     }
 
     companion object {
+
         /**
          * openingPack unlock slot material
          */
@@ -42,5 +43,7 @@ class ActionUnlock {
         fun parser() = scriptParser {
             Unlock(it.nextInt())
         }
+
     }
+
 }

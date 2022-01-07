@@ -38,6 +38,7 @@ class ActionInventory {
                 }
             }
         }
+
     }
 
     class Take(val type: String, val value: ParsedAction<String>, val amount: Int) : ScriptAction<Boolean>() {
@@ -65,6 +66,7 @@ class ActionInventory {
     }
 
     companion object {
+
         @KetherParser(["inventory"], shared = true)
         fun parser() = scriptParser {
             it.switch {
@@ -72,5 +74,7 @@ class ActionInventory {
                 case("take") { Take(it.nextToken(), it.nextAction(), it.nextInt()) }
             }
         }
+
     }
+
 }

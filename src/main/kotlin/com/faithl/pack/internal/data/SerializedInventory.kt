@@ -1,11 +1,10 @@
 package com.faithl.pack.internal.data;
 
 import com.faithl.pack.api.FaithlPackAPI
-import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.inventory.Pack
 import org.bukkit.entity.Player
-import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerKickEvent
+import org.bukkit.event.player.PlayerLoginEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.inventory.Inventory
 import taboolib.common.platform.event.SubscribeEvent
@@ -52,11 +51,12 @@ data class SerializedInventory(val player: Player) {
         }
 
         @SubscribeEvent
-        fun e(e: PlayerJoinEvent) {
+        fun e(e: PlayerLoginEvent) {
             SerializedInventory(e.player)
             Pack.packList.forEach {
                 Database.INSTANCE.getPack(e.player, it)
             }
         }
     }
+
 }
