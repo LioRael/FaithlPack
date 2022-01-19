@@ -4,15 +4,9 @@ import com.alibaba.fastjson.JSONObject
 import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.util.JsonUtil
 import com.faithl.pack.internal.conf.PackLoader
-import org.bukkit.Material
-import org.bukkit.entity.Item
 import org.bukkit.entity.Player
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.EquipmentSlot
-import org.bukkit.inventory.ItemFactory
 import taboolib.common.env.RuntimeDependency
 import taboolib.common.platform.Plugin
-import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.console
 import taboolib.common.platform.function.pluginVersion
 import taboolib.common.platform.function.runningPlatform

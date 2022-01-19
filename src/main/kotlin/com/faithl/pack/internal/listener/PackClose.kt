@@ -6,7 +6,7 @@ import taboolib.common.platform.event.SubscribeEvent
 
 /**
  * @author Leosouthey
- * @time 2022/1/1-20:18
+ * @since 2022/1/1-20:18
  **/
 object PackClose {
 

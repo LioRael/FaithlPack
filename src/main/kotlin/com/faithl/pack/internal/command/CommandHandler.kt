@@ -18,7 +18,7 @@ import taboolib.platform.util.asLangText
  * @author Leosouthey
  * @constructor Create empty Command handler
  */
-@CommandHeader(name = "faithlpack", aliases = ["fpack"], permission = "faithlpack.access")
+@CommandHeader(name = "faithlpack", aliases = ["fpack"])
 object CommandHandler {
 
     @CommandBody(permission = "faithlpack.reload")
@@ -79,4 +79,5 @@ object CommandHandler {
         displayArg("reload", sender.asLangText("Command-Reload-Description"))
         proxySender.sendMessage("")
     }
+
 }

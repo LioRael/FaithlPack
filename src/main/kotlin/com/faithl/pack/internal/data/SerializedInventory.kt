@@ -11,7 +11,7 @@ import taboolib.common.platform.event.SubscribeEvent
 
 /**
  * @author Leosouthey
- * @time 2021/12/10-20:15
+ * @since 2021/12/10-20:15
  **/
 data class SerializedInventory(val player: Player) {
 

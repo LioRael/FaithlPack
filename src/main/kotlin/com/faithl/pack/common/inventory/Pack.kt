@@ -22,4 +22,5 @@ class Pack(root: ConfigurationSection?) {
     companion object {
         val packList = mutableListOf<Pack>()
     }
+
 }

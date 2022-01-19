@@ -8,7 +8,7 @@ import taboolib.platform.type.BukkitProxyEvent
 
 /**
  * @author Leosouthey
- * @time 2022/1/1-18:22
+ * @since 2022/1/1-18:22
  **/
 class PackCloseEvent(val player: Player, val pack: Pack, val page: Int, val inv: Inventory) : BukkitProxyEvent() {
 

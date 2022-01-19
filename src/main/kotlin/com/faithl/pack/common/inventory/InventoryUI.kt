@@ -5,7 +5,7 @@ import org.bukkit.inventory.Inventory
 
 /**
  * @author Leosouthey
- * @time 2021/12/3-17:56
+ * @since 2021/12/3-17:56
  **/
 abstract class InventoryUI {
     abstract fun build(player: Player, page: Int): Inventory

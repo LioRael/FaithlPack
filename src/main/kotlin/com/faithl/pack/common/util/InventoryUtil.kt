@@ -15,7 +15,7 @@ import taboolib.platform.util.isAir
  * 若容器中物品已满,将会返回剩余的数量的物品堆
  *
  * @author Leosouthey
- * @time 2021/12/4-19:04
+ * @since 2021/12/4-19:04
  * @param item 物品堆
  */
 fun Inventory.putItem(item: ItemStack): ItemStack {

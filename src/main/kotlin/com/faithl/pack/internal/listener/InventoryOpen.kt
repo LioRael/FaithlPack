@@ -10,7 +10,7 @@ import taboolib.module.nms.getItemTag
 
 /**
  * @author Leosouthey
- * @time 2021/12/10-19:54
+ * @since 2021/12/10-19:54
  **/
 object InventoryOpen {
 
