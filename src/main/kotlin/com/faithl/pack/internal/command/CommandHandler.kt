@@ -5,10 +5,7 @@ import com.faithl.pack.internal.command.impl.CommandBind
 import com.faithl.pack.internal.command.impl.CommandOpen
 import com.faithl.pack.internal.command.impl.CommandReload
 import org.bukkit.command.CommandSender
-import taboolib.common.platform.command.CommandBody
-import taboolib.common.platform.command.CommandHeader
-import taboolib.common.platform.command.mainCommand
-import taboolib.common.platform.command.subCommand
+import taboolib.common.platform.command.*
 import taboolib.common.platform.function.adaptCommandSender
 import taboolib.module.chat.TellrawJson
 import taboolib.platform.util.asLangText
@@ -18,7 +15,7 @@ import taboolib.platform.util.asLangText
  * @author Leosouthey
  * @constructor Create empty Command handler
  */
-@CommandHeader(name = "faithlpack", aliases = ["fpack"])
+@CommandHeader(name = "faithlpack", aliases = ["fpack"], permissionDefault = PermissionDefault.TRUE)
 object CommandHandler {
 
     @CommandBody(permission = "faithlpack.reload")

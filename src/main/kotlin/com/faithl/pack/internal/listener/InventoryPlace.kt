@@ -29,6 +29,10 @@ object InventoryPlace {
         if (InventoryUI.openingInventory[player] != e.inventory) {
             return
         }
+        if (e.action == InventoryAction.DROP_ALL_CURSOR || e.action == InventoryAction.DROP_ALL_SLOT || e.action == InventoryAction.DROP_ONE_CURSOR || e.action == InventoryAction.DROP_ONE_SLOT) {
+            e.isCancelled = true
+            return
+        }
         val pack = InventoryUI.openingPack[player]
         val itemStack = player.inventory.getItem(e.slot) ?: return
         if (itemStack.isAir()) {
@@ -41,6 +45,7 @@ object InventoryPlace {
                 || e.action == InventoryAction.PICKUP_SOME
                 || e.action == InventoryAction.MOVE_TO_OTHER_INVENTORY
                 || e.action == InventoryAction.SWAP_WITH_CURSOR
+                || e.action == InventoryAction.HOTBAR_SWAP
             ) {
                 if (!condition(pack, itemStack)) {
                     player.sendLang("Pack-Put-Error", pack.name!!)

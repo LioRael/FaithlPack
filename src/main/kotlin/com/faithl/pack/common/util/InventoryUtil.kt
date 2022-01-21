@@ -4,7 +4,10 @@ import com.faithl.pack.common.inventory.Pack
 import ink.ptms.zaphkiel.ZaphkielAPI
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import taboolib.common.platform.function.info
 import taboolib.common.util.asList
+import taboolib.library.xseries.XMaterial
+import taboolib.library.xseries.parseToMaterial
 import taboolib.module.nms.getItemTag
 import taboolib.module.nms.getName
 import taboolib.platform.util.hasLore
@@ -16,40 +19,43 @@ import taboolib.platform.util.isAir
  *
  * @author Leosouthey
  * @since 2021/12/4-19:04
- * @param item 物品堆
+ * @param inventory 容器
+ * @return 物品堆
  */
-fun Inventory.putItem(item: ItemStack): ItemStack {
-    if (contents.isNotEmpty()) {
-        for (inventoryItem in contents) {
-            if (inventoryItem == null) {
+fun ItemStack.putTo(inventory: Inventory): ItemStack {
+    if (inventory.contents.isNotEmpty()) {
+        for (inventoryItem in inventory.contents) {
+            if (inventoryItem.isAir()) {
                 continue
             }
-            if (inventoryItem.getItemTag() == item.getItemTag()) {
+            val invLore = inventoryItem.itemMeta?.lore ?: mutableListOf()
+            val lore = this.itemMeta?.lore ?: mutableListOf()
+            if (inventoryItem.getName() == this.getName() && invLore == lore && inventoryItem.getItemTag() == this.getItemTag()) {
                 val remainSize = inventoryItem.type.maxStackSize - inventoryItem.amount
                 if (remainSize > 0) {
-                    val itemCache = item.clone()
+                    val itemCache = this.clone()
                     if (itemCache.amount >= remainSize) {
                         itemCache.amount = remainSize
                     }
-                    addItem(itemCache)
-                    item.amount -= itemCache.amount
+                    inventory.addItem(itemCache)
+                    this.amount -= itemCache.amount
                 }
-                if (item.amount == 0) {
+                if (this.amount == 0) {
                     break
                 }
             }
         }
     }
-    if (item.amount > 0) {
-        for (slot in 0 until size) {
-            if (getItem(slot).isAir()) {
-                addItem(item)
-                item.amount = 0
+    if (this.amount > 0) {
+        for (slot in 0 until inventory.size) {
+            if (inventory.getItem(slot).isAir()) {
+                inventory.addItem(this)
+                this.amount = 0
                 break
             }
         }
     }
-    return item
+    return this
 }
 
 fun condition(pack: Pack, item: ItemStack): Boolean {
@@ -80,6 +86,13 @@ fun condition(pack: Pack, item: ItemStack): Boolean {
                     if (type == value) {
                         return true
                     }
+                }
+            }
+        }
+        "id", "type", "material" -> {
+            pack.sort["condition.value"]?.asList()?.forEach { value ->
+                if (value.parseToMaterial() == item.type) {
+                    return true
                 }
             }
         }

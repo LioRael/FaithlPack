@@ -6,7 +6,7 @@ import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.inventory.Pack
 import com.faithl.pack.common.inventory.PackUI
 import com.faithl.pack.common.util.condition
-import com.faithl.pack.common.util.putItem
+import com.faithl.pack.common.util.putTo
 import com.faithl.pack.internal.data.Database
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityPickupItemEvent
@@ -45,7 +45,7 @@ object ItemPickup {
                             player.closeInventory()
                         }
                         val newPack = (pack.ui as PackUI).getData(player, page)
-                        newPack!!.putItem(itemStack)
+                        itemStack.putTo(newPack!!)
                         FaithlPackAPI.setPack(player, pack, page, newPack)
                         if (itemStack.amount == 0) {
                             break@page
