@@ -9,12 +9,15 @@ Plugin-Update: '&7[&bFaithlPack&7] &r发现新版本, 当前版本 &b{0}&r, 最�
 
 Command-Help-Type: '命令'
 Command-Help-Args: '参数'
-Command-Open-Description: '打开仓库'
-Command-Reload-Description: '重载插件'
-Command-Bind-Description: '获取绑定石'
+Command-Open-Description: '打开仓库 &8(faithlpack.open(.other))'
+Command-Reload-Description: '重载插件 &8(faithlpack.reload)'
+Command-Bind-Description: '获取绑定石 &8(faithlpack.bind)'
+Command-Unbind-Description: '解锁模式 &8(faithlpack.unbind)'
 Command-Open-Info: '&7[&bFaithlPack&7] &r已为玩家 &b{0} &r打开 &b{1}&r.'
 Command-Reload-Info: '&7[&bFaithlPack&7] &r插件已重载.'
 Command-Bind-Info: '&7[&bFaithlPack&7] &b{0} &r已获得了一个 &b{1}&r.'
+Command-Unbind-Info: '&7[&bFaithlPack&7] &r你已进入解锁模式,右键箱子以解锁.'
+Command-Unbind-Quit: '&7[&bFaithlPack&7] &r你已手动退出解锁模式.'
 
 Pack-Auto-Pick-On: '&7[&bFaithlPack&7] &b{0} &r的自动拾取&a已开启&r.'
 Pack-Auto-Pick-Off: '&7[&bFaithlPack&7] &b{0} &r的自动拾取&c已关闭&r.'

@@ -2,10 +2,12 @@ package com.faithl.pack.internal.listener
 
 import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.common.inventory.InventoryUI
+import com.faithl.pack.internal.command.impl.CommandUnbind
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.inventory.InventoryType
 import taboolib.common.platform.event.SubscribeEvent
+import taboolib.common.platform.function.adaptPlayer
 import taboolib.module.nms.getItemTag
 
 /**
@@ -24,6 +26,10 @@ object InventoryOpen {
             return
         }
         if (e.inventory.type == InventoryType.WORKBENCH) {
+            return
+        }
+        if (CommandUnbind.unbindPlayers.find { e.player == it} != null){
+            CommandUnbind.unbindPlayers.remove(e.player)
             return
         }
         for (item in e.inventory.storageContents) {

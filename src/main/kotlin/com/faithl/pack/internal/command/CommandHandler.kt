@@ -4,6 +4,7 @@ import com.faithl.pack.FaithlPack
 import com.faithl.pack.internal.command.impl.CommandBind
 import com.faithl.pack.internal.command.impl.CommandOpen
 import com.faithl.pack.internal.command.impl.CommandReload
+import com.faithl.pack.internal.command.impl.CommandUnbind
 import org.bukkit.command.CommandSender
 import taboolib.common.platform.command.*
 import taboolib.common.platform.function.adaptCommandSender
@@ -26,6 +27,9 @@ object CommandHandler {
 
     @CommandBody(permission = "faithlpack.bind")
     val bind = CommandBind.command
+
+    @CommandBody(permission = "faithlpack.unbind")
+    val unbind = CommandUnbind.command
 
     @CommandBody(permission = "faithlpack.access")
     val main = mainCommand {
@@ -73,6 +77,7 @@ object CommandHandler {
         }
         displayArg("open", sender.asLangText("Command-Open-Description"))
         displayArg("bind", sender.asLangText("Command-Bind-Description"))
+        displayArg("unbind", sender.asLangText("Command-Unbind-Description"))
         displayArg("reload", sender.asLangText("Command-Reload-Description"))
         proxySender.sendMessage("")
     }
