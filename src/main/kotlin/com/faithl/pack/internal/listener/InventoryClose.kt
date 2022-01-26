@@ -20,14 +20,15 @@ object InventoryClose {
         if (InventoryUI.openingInventory[player] != e.inventory) {
             return
         }
-        val event = PackCloseEvent(
-            player, InventoryUI.openingPack[player]!!, InventoryUI.openingPage[player]!!,
+        val event = PackCloseEvent(player,
+            InventoryUI.openingOwner[player]!!, InventoryUI.openingPack[player]!!, InventoryUI.openingPage[player]!!,
             InventoryUI.openingInventory[player]!!
         )
         event.call()
         InventoryUI.openingInventory[player] = null
         InventoryUI.openingPack[player] = null
         InventoryUI.openingPage[player] = null
+        InventoryUI.openingOwner[player] = null
     }
 
 }

@@ -40,16 +40,16 @@ object InventoryClick {
                 val page = InventoryUI.openingPage[player]
                 if (e.isLeftClick) {
                     PackCloseEvent(
-                        player as Player, pack!!, page!!,
+                        player as Player, InventoryUI.openingOwner[player]!!, pack!!, page!!,
                         InventoryUI.openingInventory[player]!!
                     ).call()
-                    PackUI(pack).open(player, page + 1)
+                    PackUI(pack).open(player, InventoryUI.openingOwner[player]!!, page + 1)
                 } else if (e.isRightClick) {
                     PackCloseEvent(
-                        player as Player, pack!!, page!!,
+                        player as Player, InventoryUI.openingOwner[player]!!, pack!!, page!!,
                         InventoryUI.openingInventory[player]!!
                     ).call()
-                    PackUI(pack).open(player, page - 1)
+                    PackUI(pack).open(player, InventoryUI.openingOwner[player]!!, page - 1)
                 }
             }
             "unlock" -> {

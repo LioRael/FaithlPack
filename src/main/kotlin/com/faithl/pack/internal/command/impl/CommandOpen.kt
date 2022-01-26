@@ -26,9 +26,9 @@ object CommandOpen {
             }
             execute<ProxyPlayer> { sender, _, argument ->
                 val pack = FaithlPackAPI.getPack(argument)
-                pack?.ui?.open(sender.cast(), 1) ?: return@execute
+                pack?.ui?.open(sender.cast(), sender.cast(), 1) ?: return@execute
                 sender.sendLang("Player-Opened-Pack", pack.name!!)
-                val senderPlayer: Player = sender.cast()
+                val senderPlayer: Player = sender.cast() ?: return@execute
                 XSound.BLOCK_ENDER_CHEST_OPEN.play(senderPlayer)
             }
             dynamic(commit = "player", permission = "faithlpack.open.other") {
@@ -40,11 +40,11 @@ object CommandOpen {
                 execute<ProxyCommandSender> { sender, context, argument ->
                     val pack = FaithlPackAPI.getPack(context.argument(-1))
                     val player = Bukkit.getPlayerExact(argument)
-                    pack?.ui?.open(player!!, 1) ?: return@execute
+                    pack?.ui?.open(sender.cast(), player!!, 1) ?: return@execute
                     player!!.sendLang("Player-Opened-Pack", pack.name!!)
                     sender.sendLang("Command-Open-Info", player.name, pack.name)
                     XSound.BLOCK_ENDER_CHEST_OPEN.play(player)
-                    val senderPlayer: Player = sender.cast()
+                    val senderPlayer: Player = sender.cast() ?: return@execute
                     XSound.BLOCK_ENDER_CHEST_OPEN.play(senderPlayer)
                 }
             }

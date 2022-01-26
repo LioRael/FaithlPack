@@ -9,13 +9,14 @@ import org.bukkit.inventory.Inventory
  **/
 abstract class InventoryUI {
     abstract fun build(player: Player, page: Int): Inventory
-    abstract fun open(player: Player, page: Int)
+    abstract fun open(target: Player, player: Player, page: Int)
 
     companion object {
 
         val openingInventory = mutableMapOf<Player, Inventory?>()
         val openingPack = mutableMapOf<Player, Pack?>()
         val openingPage = mutableMapOf<Player, Int?>()
+        val openingOwner = mutableMapOf<Player, Player?>()
 
     }
 

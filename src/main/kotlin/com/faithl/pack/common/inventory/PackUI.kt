@@ -30,13 +30,14 @@ class PackUI(val pack: Pack) : InventoryUI() {
         }
     }
 
-    override fun open(player: Player, page: Int) {
+    override fun open(target: Player, player: Player, page: Int) {
         val ui = getData(player, page) ?: return
-        openingInventory[player] = ui
-        openingPack[player] = pack
-        openingPage[player] = page
-        PackOpenEvent(player, pack, page).call()
-        player.openInventory(ui)
+        openingInventory[target] = ui
+        openingPack[target] = pack
+        openingPage[target] = page
+        openingOwner[target] = player
+        PackOpenEvent(target, player, pack, page).call()
+        target.openInventory(ui)
     }
 
     fun updateItems(player: Player, page: Int, pack: Inventory) {

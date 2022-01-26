@@ -28,7 +28,7 @@ object InventoryOpen {
         if (e.inventory.type == InventoryType.WORKBENCH) {
             return
         }
-        if (CommandUnbind.unbindPlayers.find { e.player == it} != null){
+        if (CommandUnbind.unbindPlayers.find { e.player == it } != null) {
             CommandUnbind.unbindPlayers.remove(e.player)
             return
         }
@@ -39,7 +39,7 @@ object InventoryOpen {
             val type = item.getItemTag().getDeep("pack.type") ?: continue
             if (type.asString() == "bind") {
                 e.isCancelled = true
-                FaithlPackAPI.getPack(item.getItemTag().getDeep("pack.bind").asString())?.ui?.open(player, 1)
+                FaithlPackAPI.getPack(item.getItemTag().getDeep("pack.bind").asString())?.ui?.open(player, player, 1)
                 break
             }
         }
