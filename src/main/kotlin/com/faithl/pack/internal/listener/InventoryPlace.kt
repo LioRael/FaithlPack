@@ -5,6 +5,7 @@ import com.faithl.pack.common.util.condition
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.player.PlayerDropItemEvent
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.platform.util.isAir
 import taboolib.platform.util.sendLang

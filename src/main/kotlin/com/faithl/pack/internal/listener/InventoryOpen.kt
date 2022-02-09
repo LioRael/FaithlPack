@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryType
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.adaptPlayer
 import taboolib.module.nms.getItemTag
+import taboolib.platform.util.isAir
 
 /**
  * @author Leosouthey
@@ -33,10 +34,10 @@ object InventoryOpen {
             return
         }
         for (item in e.inventory.storageContents) {
-            if (item == null) {
+            if (item.isAir()) {
                 continue
             }
-            val type = item.getItemTag().getDeep("pack.type") ?: continue
+            val type = item?.getItemTag()?.getDeep("pack.type") ?: continue
             if (type.asString() == "bind") {
                 e.isCancelled = true
                 FaithlPackAPI.getPack(item.getItemTag().getDeep("pack.bind").asString())?.ui?.open(player, player, 1)
