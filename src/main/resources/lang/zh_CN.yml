@@ -22,6 +22,7 @@ Command-Unbind-Quit: '&7[&bFaithlPack&7] &r你已手动退出解锁模式.'
 Pack-Auto-Pick-On: '&7[&bFaithlPack&7] &b{0} &r的自动拾取&a已开启&r.'
 Pack-Auto-Pick-Off: '&7[&bFaithlPack&7] &b{0} &r的自动拾取&c已关闭&r.'
 Pack-Auto-Pick-Info: '&7[&bFaithlPack&7] &r已为你将 &b{0} &r个 &b{1} &r放入 &b{2}&r.'
+Pack-Auto-Pick-Error: '&7[&bFaithlPack&7] &r你没有权限打开该仓库的自动拾取.'
 Pack-Put-Error: '&7[&bFaithlPack&7] &r你无法将该物品放入 &b{0}.'
 
 Loader-Loaded: '&7[&bFaithlPack&7] &b{0} &r个仓库已加载 &8({1} ms)&r.'

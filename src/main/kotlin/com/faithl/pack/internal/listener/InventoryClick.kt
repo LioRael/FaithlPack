@@ -70,12 +70,27 @@ object InventoryClick {
                 }
             }
             "setting.auto-pickup" -> {
-                if (Database.INSTANCE.getAutoPickup(player as Player, pack!!)) {
+                if (pack?.sort?.getBoolean("auto-pickup.enabled") == null) {
+                    player.sendLang("Pack-Auto-Pick-Error")
+                    return
+                }
+                if (pack.permission != null && !player.hasPermission(pack.permission)) {
+                    player.sendLang("Pack-Auto-Pick-Error")
+                    return
+                }
+                val autoPickupPermission = pack.sort.getString("auto-pickup.permission")
+                if (autoPickupPermission != null && !player.hasPermission(autoPickupPermission)) {
+                    player.sendLang("Pack-Auto-Pick-Error")
+                    return
+                }
+                if (Database.INSTANCE.getAutoPickup(player as Player, pack)) {
                     Database.INSTANCE.setAutoPickup(player, pack, false)
                     player.sendLang("Pack-Auto-Pick-Off", pack.name!!)
+                    return
                 } else {
                     Database.INSTANCE.setAutoPickup(player, pack, true)
                     player.sendLang("Pack-Auto-Pick-On", pack.name!!)
+                    return
                 }
             }
         }

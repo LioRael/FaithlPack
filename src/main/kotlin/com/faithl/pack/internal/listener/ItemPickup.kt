@@ -26,15 +26,15 @@ object ItemPickup {
         pack@ for (pack in Pack.packList) {
             if (pack.sort?.getBoolean("auto-pickup.enabled") ?: continue) {
                 if (!Database.INSTANCE.getAutoPickup(player, pack)) {
-                    continue
+                    continue@pack
                 }
             }
             if (pack.permission != null && !player.hasPermission(pack.permission)) {
-                continue
+                continue@pack
             }
             val autoPickupPermission = pack.sort.getString("auto-pickup.permission")
             if (autoPickupPermission != null && !player.hasPermission(autoPickupPermission)) {
-                continue
+                continue@pack
             }
             if (condition(pack, e.item.itemStack)) {
                 val itemStack = e.item.itemStack.clone()
