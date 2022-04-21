@@ -23,7 +23,7 @@ object InventoryOpen {
             return
         }
         val player = e.player as Player
-        if (InventoryUI.openingInventory[player] != null) {
+        if (InventoryUI.openingInventory[player.uniqueId] != null) {
             return
         }
         if (e.inventory.type == InventoryType.WORKBENCH) {

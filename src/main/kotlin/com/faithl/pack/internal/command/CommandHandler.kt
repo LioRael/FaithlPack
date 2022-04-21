@@ -1,10 +1,7 @@
 package com.faithl.pack.internal.command
 
 import com.faithl.pack.FaithlPack
-import com.faithl.pack.internal.command.impl.CommandBind
-import com.faithl.pack.internal.command.impl.CommandOpen
-import com.faithl.pack.internal.command.impl.CommandReload
-import com.faithl.pack.internal.command.impl.CommandUnbind
+import com.faithl.pack.internal.command.impl.*
 import org.bukkit.command.CommandSender
 import taboolib.common.platform.command.*
 import taboolib.common.platform.function.adaptCommandSender
@@ -24,6 +21,9 @@ object CommandHandler {
 
     @CommandBody(permission = "faithlpack.open")
     val open = CommandOpen.command
+
+    @CommandBody(permission = "faithlpack.save")
+    val save = CommandSave.command
 
     @CommandBody(permission = "faithlpack.bind")
     val bind = CommandBind.command

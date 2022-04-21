@@ -18,6 +18,7 @@ class Pack(root: ConfigurationSection?) {
     val enabledLock = root?.getBoolean("Enabled-Lock") ?: true
     val permission = root?.getString("Permission")
     val sort = root?.getConfigurationSection("Sort")
+    val message = root?.getBoolean("Message", true) ?: true
 
     companion object {
         val packList = mutableListOf<Pack>()

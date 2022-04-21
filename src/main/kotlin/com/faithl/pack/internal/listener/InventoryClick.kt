@@ -4,6 +4,7 @@ import com.faithl.pack.api.event.PackCloseEvent
 import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.inventory.PackUI
 import com.faithl.pack.internal.data.Database
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import taboolib.common.platform.event.SubscribeEvent
@@ -22,10 +23,10 @@ object InventoryClick {
             return
         }
         val player = e.whoClicked
-        if (InventoryUI.openingInventory[player] == null) {
+        if (InventoryUI.openingInventory[player.uniqueId] == null) {
             return
         }
-        if (InventoryUI.openingInventory[player] != e.inventory) {
+        if (InventoryUI.openingInventory[player.uniqueId] != e.inventory) {
             return
         }
         val item = e.currentItem ?: return
@@ -33,23 +34,24 @@ object InventoryClick {
             return
         }
         val type = item.getItemTag().getDeep("pack.type") ?: return
-        val pack = InventoryUI.openingPack[player]
+        val pack = InventoryUI.openingPack[player.uniqueId]
         e.isCancelled = true
+        val owner = InventoryUI.openingOwner[player.uniqueId]?.let { Bukkit.getPlayer(it) } ?: return
         when (type.asString()) {
             "page" -> {
-                val page = InventoryUI.openingPage[player]
+                val page = InventoryUI.openingPage[player.uniqueId]
                 if (e.isLeftClick) {
                     PackCloseEvent(
-                        player as Player, InventoryUI.openingOwner[player]!!, pack!!, page!!,
-                        InventoryUI.openingInventory[player]!!
+                        player as Player, owner, pack!!, page!!,
+                        InventoryUI.openingInventory[player.uniqueId]!!
                     ).call()
-                    PackUI(pack).open(player, InventoryUI.openingOwner[player]!!, page + 1)
+                    PackUI(pack).open(player, owner, page + 1)
                 } else if (e.isRightClick) {
                     PackCloseEvent(
-                        player as Player, InventoryUI.openingOwner[player]!!, pack!!, page!!,
-                        InventoryUI.openingInventory[player]!!
+                        player as Player, owner, pack!!, page!!,
+                        InventoryUI.openingInventory[player.uniqueId]!!
                     ).call()
-                    PackUI(pack).open(player, InventoryUI.openingOwner[player]!!, page - 1)
+                    PackUI(pack).open(player, owner, page - 1)
                 }
             }
             "unlock" -> {

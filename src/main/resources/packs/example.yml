@@ -5,6 +5,7 @@
 
 Name: '工具仓库'
 Enabled-Lock: true
+Message: true
 Permission: 'faithlpack.pack.tool'
 Inventory:
   title: '&b工具仓库 &8[{page}/{pages}]'

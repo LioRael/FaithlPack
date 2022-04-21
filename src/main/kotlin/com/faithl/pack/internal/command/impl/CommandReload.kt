@@ -3,6 +3,7 @@ package com.faithl.pack.internal.command.impl
 import com.faithl.pack.FaithlPack
 import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.inventory.Pack
+import org.bukkit.Bukkit
 import taboolib.common.platform.ProxyCommandSender
 import taboolib.common.platform.command.subCommand
 import taboolib.module.lang.sendLang
@@ -15,7 +16,8 @@ object CommandReload {
             FaithlPack.init()
             FaithlPack.setting.reload()
             InventoryUI.openingInventory.forEach {
-                it.key.closeInventory()
+                InventoryUI.saveInventory(it.key)
+                Bukkit.getPlayer(it.key)?.closeInventory()
             }
             sender.sendLang("Command-Reload-Info")
         }
