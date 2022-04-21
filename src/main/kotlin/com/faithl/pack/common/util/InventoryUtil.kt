@@ -78,6 +78,20 @@ fun condition(pack: Pack, item: ItemStack): Boolean {
                 }
             }
         }
+        "nbt-v" -> {
+            if (item.getItemTag().size <= 0) {
+                return false
+            }
+            val list = pack.sort["condition.value"]?.asList() ?: listOf()
+            return item.getItemTag().values.map { it.asString() }.containsAll(list)
+        }
+        "nbt-k" -> {
+            if (item.getItemTag().size <= 0) {
+                return false
+            }
+            val list = pack.sort["condition.value"]?.asList() ?: listOf()
+            return item.getItemTag().keys.containsAll(list)
+        }
         "zap", "zaphkiel" -> {
             val itemStream = ZaphkielAPI.read(item)
             if (itemStream.isExtension()) {

@@ -1,7 +1,10 @@
 package com.faithl.pack.common.inventory
 
+import com.faithl.pack.api.FaithlPackAPI
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
+import java.util.UUID
 
 /**
  * @author Leosouthey
@@ -13,11 +16,22 @@ abstract class InventoryUI {
 
     companion object {
 
-        val openingInventory = mutableMapOf<Player, Inventory?>()
-        val openingPack = mutableMapOf<Player, Pack?>()
-        val openingPage = mutableMapOf<Player, Int?>()
-        val openingOwner = mutableMapOf<Player, Player?>()
+        val openingInventory = mutableMapOf<UUID, Inventory?>()
+        val openingPack = mutableMapOf<UUID, Pack?>()
+        val openingPage = mutableMapOf<UUID, Int?>()
+        val openingOwner = mutableMapOf<UUID, UUID?>()
 
+        fun saveInventory(sender: UUID) {
+            val player = Bukkit.getPlayer(sender) ?: return
+            val inv = openingInventory[sender] ?: return
+            val pack = openingPack[sender] ?: return
+            val page = openingPage[sender] ?: return
+            FaithlPackAPI.setPack(player, pack, page, inv)
+        }
+
+        fun saveInventory(player: Player) {
+            saveInventory(player.uniqueId)
+        }
     }
 
 }

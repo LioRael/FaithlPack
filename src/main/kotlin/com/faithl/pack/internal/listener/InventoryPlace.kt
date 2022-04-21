@@ -24,17 +24,17 @@ object InventoryPlace {
         if (e.clickedInventory != player.inventory) {
             return
         }
-        if (InventoryUI.openingInventory[player] == null) {
+        if (InventoryUI.openingInventory[player.uniqueId] == null) {
             return
         }
-        if (InventoryUI.openingInventory[player] != e.inventory) {
+        if (InventoryUI.openingInventory[player.uniqueId] != e.inventory) {
             return
         }
         if (e.action == InventoryAction.DROP_ALL_CURSOR || e.action == InventoryAction.DROP_ALL_SLOT || e.action == InventoryAction.DROP_ONE_CURSOR || e.action == InventoryAction.DROP_ONE_SLOT) {
             e.isCancelled = true
             return
         }
-        val pack = InventoryUI.openingPack[player]
+        val pack = InventoryUI.openingPack[player.uniqueId]
         val itemStack = player.inventory.getItem(e.slot) ?: return
         if (itemStack.isAir()) {
             return

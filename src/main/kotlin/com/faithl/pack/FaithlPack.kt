@@ -4,12 +4,16 @@ import com.alibaba.fastjson.JSONObject
 import com.faithl.pack.common.inventory.InventoryUI
 import com.faithl.pack.common.util.JsonUtil
 import com.faithl.pack.internal.conf.PackLoader
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import taboolib.common.LifeCycle
 import taboolib.common.env.RuntimeDependency
+import taboolib.common.platform.Awake
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.function.console
 import taboolib.common.platform.function.pluginVersion
 import taboolib.common.platform.function.runningPlatform
+import taboolib.common.platform.function.submit
 import taboolib.common.util.Version
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
@@ -44,7 +48,7 @@ object FaithlPack : Plugin() {
 
     override fun onDisable() {
         InventoryUI.openingInventory.forEach {
-            it.key.closeInventory()
+            Bukkit.getPlayer(it.key)?.closeInventory()
         }
         console().sendLang("Plugin-Disabled")
     }
@@ -52,6 +56,15 @@ object FaithlPack : Plugin() {
     fun init() {
         PackLoader.loadInventories()
         checkUpdate()
+    }
+
+    @Awake(LifeCycle.ENABLE)
+    fun autoSave() {
+        submit(period = 20 * 60) {
+            InventoryUI.openingInventory.toMap().forEach {
+                InventoryUI.saveInventory(it.key)
+            }
+        }
     }
 
     /**
