@@ -55,7 +55,7 @@ object ItemPickup {
                         }
                     }
                 }
-                if (e.item.itemStack.amount - itemStack.amount != 0) {
+                if (e.item.itemStack.amount - itemStack.amount != 0 && pack.message) {
                     player.sendLang(
                         "Pack-Auto-Pick-Info",
                         e.item.itemStack.amount - itemStack.amount,
