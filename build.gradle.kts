@@ -47,7 +47,7 @@ dependencies {
     compileOnly("ink.ptms.core:v11802:11802:universal")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
     compileOnly("ink.ptms:Zaphkiel:1.7.6")
-    implementation("com.google.code.gson:gson:2.9.0")
+    compileOnly("com.google.code.gson:gson:2.9.0")
     compileOnly(fileTree("libs"))
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
 }
