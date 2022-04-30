@@ -1,0 +1,71 @@
+
+
+#         Powered by TabooLib 6.0         #
+
+
+name: '工具仓库'
+lock: true
+use-permission: 'faithlpack.pack.tool'
+inventory:
+  title: '&b工具仓库 &8[{page}/{pages}]'
+  pages: 3
+  rows: 6
+  default-size: 18
+  items:
+    unlock:
+      display:
+        material: 'LIGHT_BLUE_STAINED_GLASS_PANE'
+        name: '&7未解锁'
+        lore:
+          - '&8| &a左键 &8消耗 &6100点卷 &8解锁该槽位'
+          - '&8| &a右键 &8消耗 &61个解锁石 &8解锁该槽位'
+        shiny: true
+      action:
+        left-click: |-
+          if check type int papi *"%playerpoints_points%" >= *100 then {
+            command inline *"points take {{ sender }} 100" as op
+            unlock @clickedSlot
+            tell color *"&7[&bFaithlPack&7] &r你花费了 &b100点卷 &r来解锁了该槽位."
+          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的点卷来解锁该槽位."
+        right-click: |-
+          if inventory take name *解锁石 1 then {
+            unlock @clickedSlot
+            tell color *"&7[&bFaithlPack&7] &r你花费了 &b1个解锁石 &r来解锁了该槽位."
+          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的解锁石来解锁该槽位."
+    page:
+      display:
+        material: 'SPECTRAL_ARROW'
+        name: '&7页码'
+        shiny: true
+        lore:
+          - '&8| &a左键 &8下一页'
+          - '&8| &6右键 &8上一页'
+    setting:
+      auto-pickup:
+        display:
+          material: 'RED_STAINED_GLASS_PANE'
+          name: '&7自动拾取'
+          lore:
+            - '&8| 点击开启或关闭'
+          shiny: true
+    null:
+      display:
+        material: 'GRAY_STAINED_GLASS_PANE'
+        name: ''
+sort:
+  must-condition: true
+  condition:
+    mode: 'name'
+    value:
+      - '镐'
+      - '斧'
+  auto-pickup:
+    enabled: true
+    player-default-enabled: true
+    permission: 'faithl.auto.tool'
+  bind:
+    material: 'DIAMOND'
+    name: '&b工具仓库绑定石'
+    lore:
+      - '&7 将该物品放入木箱/末影箱/熔炉中'
+      - '&7 即可将其绑定为工具仓库'

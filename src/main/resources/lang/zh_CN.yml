@@ -1,0 +1,32 @@
+
+
+#         Powered by TabooLib 6.0         #
+
+
+plugin-enabled: '&7[&bFaithlPack&7] &r插件已加载,当前版本:&b{0}&r,Kotlin版本:&b{1}&r.'
+plugin-disabled: '&7[&bFaithlPack&7] &r插件已卸载,感谢你的使用.'
+plugin-update: '&7[&bFaithlPack&7] &r发现新版本, 当前版本 &b{0}&r, 最新版本 &b{1}&r, 插件地址 &b{2}&r。'
+
+command-help-type: '命令'
+Command-help-args: '参数'
+command-open-description: '打开仓库 &8(faithlpack.open(.other))'
+command-reload-description: '重载插件 &8(faithlpack.reload)'
+command-bind-description: '获取绑定石 &8(faithlpack.bind)'
+command-unbind-description: '解锁模式 &8(faithlpack.unbind)'
+command-open-info: '&7[&bFaithlPack&7] &r已为玩家 &b{0} &r打开 &b{1}&r.'
+command-reload-info: '&7[&bFaithlPack&7] &r插件已重载.'
+command-bind-info: '&7[&bFaithlPack&7] &b{0} &r已获得了一个 &b{1}&r.'
+command-unbind-info: '&7[&bFaithlPack&7] &r你已进入解锁模式,右键箱子以解锁.'
+command-unbind-quit: '&7[&bFaithlPack&7] &r你已手动退出解锁模式.'
+
+pack-auto-pick-on: '&7[&bFaithlPack&7] &b{0} &r的自动拾取&a已开启&r.'
+pack-auto-pick-off: '&7[&bFaithlPack&7] &b{0} &r的自动拾取&c已关闭&r.'
+pack-auto-pick-info: '&7[&bFaithlPack&7] &r已为你将 &b{0} &r个 &b{1} &r放入 &b{2}&r.'
+pack-auto-pick-error: '&7[&bFaithlPack&7] &r你没有权限打开该仓库的自动拾取.'
+pack-put-error: '&7[&bFaithlPack&7] &r你无法将该物品放入 &b{0}.'
+
+loader-loaded: '&7[&bFaithlPack&7] &b{0} &r个仓库已加载 &8({1} ms)&r.'
+
+player-opened-pack: '&7[&bFaithlPack&7] &r你已打开 &b{0}&r.'
+player-bind: '&7[&bFaithlPack&7] &r你已获得了一个 &b{0}&r.'
+player-no-permission: '&7[&bFaithlPack&7] &c你没有使用该仓库的权限.'
