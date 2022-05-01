@@ -1,8 +1,8 @@
 package com.faithl.pack.internal.command.impl
 
 import com.faithl.pack.api.FaithlPackAPI
-import com.faithl.pack.common.core.PackPlayer
 import com.faithl.pack.common.core.PackSetting
+import com.faithl.pack.internal.database.Database
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import taboolib.common.platform.ProxyCommandSender
@@ -23,10 +23,7 @@ object CommandOpen {
                 }
             }
             execute<ProxyPlayer> { sender, _, argument ->
-                val packPlayer = PackPlayer.match(sender.cast())
-                val packData = packPlayer.data.find {
-                    it.name == argument
-                } ?: return@execute
+                val packData = Database.INSTANCE.getPackData(sender.uniqueId, argument)
                 FaithlPackAPI.open(sender.cast(), packData, 1)
                 sender.sendLang("player-opened-pack", packData.name)
                 val senderPlayer: Player = sender.cast() ?: return@execute
@@ -40,10 +37,7 @@ object CommandOpen {
                 }
                 execute<ProxyCommandSender> { sender, context, argument ->
                     val player = Bukkit.getPlayerExact(argument) ?: return@execute
-                    val packPlayer = PackPlayer.match(player)
-                    val packData = packPlayer.data.find {
-                        it.name == context.argument(-1)
-                    } ?: return@execute
+                    val packData = Database.INSTANCE.getPackData(player.uniqueId, context.argument(-1))
                     FaithlPackAPI.open(player, packData, 1)
                     player.sendLang("player-opened-pack", packData.name)
                     sender.sendLang("command-open-info", player.name, packData.name)

@@ -1,5 +1,3 @@
-
-
 #         Powered by TabooLib 6.0         #
 
 
@@ -12,7 +10,7 @@ inventory:
   rows: 6
   default-size: 18
   items:
-    unlock:
+    locked:
       display:
         material: 'LIGHT_BLUE_STAINED_GLASS_PANE'
         name: '&7未解锁'
@@ -24,14 +22,14 @@ inventory:
         left-click: |-
           if check type int papi *"%playerpoints_points%" >= *100 then {
             command inline *"points take {{ sender }} 100" as op
-            unlock @clickedSlot
-            tell color *"&7[&bFaithlPack&7] &r你花费了 &b100点卷 &r来解锁了该槽位."
-          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的点卷来解锁该槽位."
+            unlock *1
+            tell color *"&7[&bFaithlPack&7] &r你花费了 &b100点卷 &r来解锁1个槽位."
+          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的点卷来解锁1个槽位."
         right-click: |-
           if inventory take name *解锁石 1 then {
-            unlock @clickedSlot
-            tell color *"&7[&bFaithlPack&7] &r你花费了 &b1个解锁石 &r来解锁了该槽位."
-          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的解锁石来解锁该槽位."
+            unlock *1
+            tell color *"&7[&bFaithlPack&7] &r你花费了 &b1个解锁石 &r来解锁1个槽位."
+          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的解锁石来解锁1个槽位."
     page:
       display:
         material: 'SPECTRAL_ARROW'
@@ -48,7 +46,7 @@ inventory:
           lore:
             - '&8| 点击开启或关闭'
           shiny: true
-    null:
+    empty:
       display:
         material: 'GRAY_STAINED_GLASS_PANE'
         name: ''

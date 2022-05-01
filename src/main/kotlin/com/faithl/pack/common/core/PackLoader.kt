@@ -1,11 +1,11 @@
 package com.faithl.pack.common.core
 
 import com.faithl.pack.FaithlPack
-import org.bukkit.Bukkit
-import org.bukkit.command.CommandSender
+import taboolib.common.platform.ProxyCommandSender
+import taboolib.common.platform.function.console
 import taboolib.common.platform.function.releaseResourceFile
 import taboolib.module.configuration.Configuration
-import taboolib.platform.util.sendLang
+import taboolib.module.lang.sendLang
 import java.io.File
 
 /**
@@ -24,7 +24,7 @@ object PackLoader {
         folder
     }
 
-    fun loadInventories(sender: CommandSender = Bukkit.getConsoleSender()) {
+    fun loadInventories(sender: ProxyCommandSender = console()) {
         val files = mutableListOf<File>().also { list ->
             list.addAll(filterMenuFiles(folder))
             list.addAll(FaithlPack.setting.getStringList("loader.packs-files").flatMap { filterMenuFiles(File(it)) })

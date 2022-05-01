@@ -18,23 +18,27 @@ import taboolib.platform.util.buildItem
 object ItemBuilder {
 
     fun buildInventory(player: Player, packData: PackData, page: Int, rows: Int): Inventory {
-        val inventory = Bukkit.createInventory(null, rows * 9)
-        packData.getPageItems(page).forEach {
-            inventory.setItem(it.key, it.value)
-        }
+        val inventory = Bukkit.createInventory(
+            null,
+            rows * 9,
+            packData.getSetting().inventory?.getString("title")?.colored() ?: packData.name
+        )
         if (packData.getSetting().lock) {
             val unlockedSize = FaithlPackAPI.getUnlockedSize(player, packData)
-            val lockedSize = (rows - 1) * 9 * page - unlockedSize
-            if (lockedSize > 0) {
-                val lockedItemStack = getNBTItemStack(player, packData, page, "lockedItemStack")
-                for (slot in (rows - 1) * 9 - lockedSize until (rows - 1) * 9) {
-                    inventory.setItem(slot, lockedItemStack)
+            val lockedItem = page * (rows - 1) * 9 - unlockedSize
+            val lockedItemStack = getNBTItemStack(player, packData, page, "locked")
+            for (slot in 0 until inventory.size - 9) {
+                inventory.setItem(slot, lockedItemStack)
+            }
+            if (lockedItem < (rows - 1) * 9) {
+                for (slot in 0 until inventory.size - 9 - lockedItem) {
+                    inventory.clear(slot)
                 }
             }
         }
         val pageItemStack = getNBTItemStack(player, packData, page, "page")
         inventory.setItem(rows * 9 - 5, pageItemStack)
-        val nullItemStack = getNBTItemStack(player, packData, page, "null")
+        val nullItemStack = getNBTItemStack(player, packData, page, "empty")
         listOf(
             rows * 9 - 2,
             rows * 9 - 3,
@@ -48,6 +52,9 @@ object ItemBuilder {
         }
         val autoPickupItemStack = getNBTItemStack(player, packData, page, "setting.auto-pickup")
         inventory.setItem(rows * 9 - 1, autoPickupItemStack)
+        packData.getPageItems(page).forEach {
+            inventory.setItem(it.key, it.value)
+        }
         return inventory
     }
 

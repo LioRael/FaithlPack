@@ -1,18 +1,16 @@
 package com.faithl.pack.internal.database.impl
 
 import com.faithl.pack.common.core.PackData
+import com.faithl.pack.common.core.PlayerData
 import com.faithl.pack.internal.database.Database
-import com.faithl.pack.internal.utils.gson
-import com.google.gson.reflect.TypeToken
-import org.bukkit.inventory.ItemStack
+import com.faithl.pack.internal.util.base64ToPackData
+import com.faithl.pack.internal.util.toBase64
 import taboolib.common.io.newFile
 import taboolib.common.platform.function.getDataFolder
 import taboolib.module.database.ColumnTypeSQLite
 import taboolib.module.database.Table
 import taboolib.module.database.getHost
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
-import kotlin.math.log
 
 /**
  * @author Leosouthey
@@ -58,24 +56,28 @@ class DatabaseSQLite : Database() {
     }
 
     override fun getPackData(uuid: UUID, packName: String): PackData {
-        return tablePack.select(dataSource) {
-            where("owner" eq uuid.toString() and ("pack" eq packName))
-            rows("value")
-        }.firstOrNull {
-            val type = object : TypeToken<ConcurrentHashMap<Int, ItemStack>>() {}.type
-            PackData(packName, gson.fromJson(getString("value"), type))
-        } ?: PackData(packName, ConcurrentHashMap<Int, ItemStack>())
+        val result = cache.computeIfAbsent(uuid) {
+            PlayerData(tablePack.select(dataSource) {
+                where("owner" eq uuid.toString())
+                rows("value", "pack")
+            }.map {
+                PackData(getString("pack"), getString("value").base64ToPackData())
+            }.toMutableList())
+        }
+        return result.data.find {
+            it.name == packName
+        } ?: PlayerData.createPackData(result, PackData(packName))
     }
 
     override fun setPackData(uuid: UUID, packData: PackData) {
         if (tablePack.find(dataSource) { where("owner" eq uuid.toString() and ("pack" eq packData.name)) }) {
             tablePack.update(dataSource) {
                 where("owner" eq uuid.toString() and ("pack" eq packData.name))
-                set("value", packData.data.toMap())
+                set("value", packData.data.toBase64())
             }
         } else {
             tablePack.insert(dataSource, "owner", "pack", "value") {
-                value(uuid.toString(), packData.name, packData.data.toMap())
+                value(uuid.toString(), packData.name, packData.data.toBase64())
             }
         }
     }
@@ -90,13 +92,13 @@ class DatabaseSQLite : Database() {
     }
 
     override fun setPackOption(uuid: UUID, packName: String, key: String, value: String) {
-        if (tablePack.find(dataSource) { where("owner" eq uuid.toString() and ("pack" eq packName) and ("key" eq key)) }) {
-            tablePack.update(dataSource) {
+        if (tableOptions.find(dataSource) { where("owner" eq uuid.toString() and ("pack" eq packName) and ("key" eq key)) }) {
+            tableOptions.update(dataSource) {
                 where("owner" eq uuid.toString() and ("pack" eq packName) and ("key" eq key))
                 set("value", value)
             }
         } else {
-            tablePack.insert(dataSource, "owner", "pack", "key", "value") {
+            tableOptions.insert(dataSource, "owner", "pack", "key", "value") {
                 value(uuid.toString(), packName, key, value)
             }
         }
