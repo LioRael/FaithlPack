@@ -8,12 +8,14 @@ import com.faithl.pack.api.event.PackPlaceItemEvent
 import com.faithl.pack.common.core.PackSetting
 import com.faithl.pack.internal.command.impl.CommandUnbind
 import com.faithl.pack.internal.database.Database
+import com.faithl.pack.internal.util.checkUpdate
 import com.faithl.pack.internal.util.condition
 import com.faithl.pack.internal.util.putTo
 import com.faithl.pack.internal.util.sendLangIfEnabled
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.inventory.*
+import org.bukkit.event.player.PlayerJoinEvent
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.library.xseries.XSound
 import taboolib.module.nms.getItemTag
@@ -25,6 +27,13 @@ import taboolib.platform.util.isAir
  * @since 2022/4/30-19:59
  **/
 object Inventory {
+
+    @SubscribeEvent
+    fun e(e: PlayerJoinEvent) {
+        if (e.player.isOp) {
+            checkUpdate(e.player)
+        }
+    }
 
     @SubscribeEvent
     fun e(e: InventoryOpenEvent) {

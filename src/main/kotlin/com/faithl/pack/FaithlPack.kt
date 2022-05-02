@@ -2,6 +2,7 @@ package com.faithl.pack
 
 import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.common.core.PackLoader
+import com.faithl.pack.internal.util.checkUpdate
 import com.faithl.pack.internal.util.sendLangIfEnabled
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.function.console
@@ -31,6 +32,7 @@ object FaithlPack : Plugin() {
     override fun onEnable() {
         PackLoader.loadInventories()
         console().sendLangIfEnabled("plugin-enabled", pluginVersion, KotlinVersion.CURRENT.toString())
+        checkUpdate()
     }
 
     override fun onDisable() {
