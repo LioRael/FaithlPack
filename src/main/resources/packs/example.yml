@@ -20,16 +20,16 @@ inventory:
         shiny: true
       action:
         left-click: |-
-          if check type int papi *"%playerpoints_points%" >= *100 then {
-            command inline *"points take {{ sender }} 100" as op
-            unlock *1
-            tell color *"&7[&bFaithlPack&7] &r你花费了 &b100点卷 &r来解锁1个槽位."
-          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的点卷来解锁1个槽位."
+          if check papi "%playerpoints_points%" >= 100 then {
+            command inline "points take {{ sender }} 100" as op
+            unlock 1
+            tell color "&7[&bFaithlPack&7] &r你花费了 &b100点卷 &r来解锁1个槽位."
+          } else tell color "&7[&bFaithlPack&7] &c你没有足够的点卷来解锁1个槽位."
         right-click: |-
-          if inventory take name *解锁石 1 then {
-            unlock *1
-            tell color *"&7[&bFaithlPack&7] &r你花费了 &b1个解锁石 &r来解锁1个槽位."
-          } else tell color *"&7[&bFaithlPack&7] &c你没有足够的解锁石来解锁1个槽位."
+          if inventory take name 解锁石 1 then {
+            unlock 1
+            tell color "&7[&bFaithlPack&7] &r你花费了 &b1个解锁石 &r来解锁1个槽位."
+          } else tell color "&7[&bFaithlPack&7] &c你没有足够的解锁石来解锁1个槽位."
     page:
       display:
         material: 'SPECTRAL_ARROW'

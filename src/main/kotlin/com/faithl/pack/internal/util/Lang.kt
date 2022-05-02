@@ -15,18 +15,18 @@ val enable = FaithlPack.setting.getBoolean("options.message")
 
 fun Player.sendLangIfEnabled(lang: String, vararg args: Any) {
     if (enable) {
-        this.sendLang(lang, args)
+        this.sendLang(lang, *args)
     }
 }
 
 fun ProxyCommandSender.sendLangIfEnabled(lang: String, vararg args: Any) {
     if (enable) {
-        this.sendLang(lang, args)
+        this.sendLang(lang, *args)
     }
 }
 
 fun ProxyPlayer.sendLangIfEnabled(lang: String, vararg args: Any) {
     if (enable) {
-        this.sendLang(lang, args)
+        this.sendLang(lang, *args)
     }
 }

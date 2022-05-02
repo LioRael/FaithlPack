@@ -79,14 +79,14 @@ object Pack {
             "locked" -> {
                 if (e.isLeftClick) {
                     KetherShell.eval(
-                        source = pack.inventory!!["items.unlock.action.left-click"]?.toString()
+                        source = pack.inventory!!["items.locked.action.left-click"]?.toString()
                             ?.asList() ?: return,
                         sender = adaptPlayer(e.player),
                         namespace = listOf("faithlpack", "faithlpack-internal")
                     )
                 } else if (e.isRightClick) {
                     KetherShell.eval(
-                        source = pack.inventory!!["items.unlock.action.right-click"]?.toString()
+                        source = pack.inventory!!["items.locked.action.right-click"]?.toString()
                             ?.asList() ?: return,
                         sender = adaptPlayer(e.player),
                         namespace = listOf("faithlpack", "faithlpack-internal")
