@@ -61,9 +61,9 @@ sort:
     enabled: true
     player-default-enabled: true
     permission: 'faithl.auto.tool'
-  bind:
-    material: 'DIAMOND'
-    name: '&b工具仓库绑定石'
-    lore:
-      - '&7 将该物品放入木箱/末影箱/熔炉中'
-      - '&7 即可将其绑定为工具仓库'
+bind:
+  material: 'DIAMOND'
+  name: '&b工具仓库绑定石'
+  lore:
+    - '&7 将该物品放入木箱/末影箱/熔炉中'
+    - '&7 即可将其绑定为工具仓库'

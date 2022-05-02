@@ -29,16 +29,20 @@ class PackData(val name: String, val data: MutableMap<Int, ItemStack?> = mutable
             player.sendLang("player-no-permission")
             return
         }
-        val rows = getSetting().rows
-        if (rows > 6) {
-            throw Exception("The number of rows exceeded the limit.(it has to be less than 6)")
-        }
-        val inventory = ItemBuilder.buildInventory(player, this, page, rows)
+        val inventory = build(player, page)
         FaithlPackAPI.openingPacks.add(OpeningPack(player, this, inventory, page))
         val event = PackOpenEvent(player, this, page, inventory)
         if (event.call()) {
             player.openInventory(event.inventory)
         }
+    }
+
+    fun build(player: Player, page: Int): Inventory {
+        val rows = getSetting().rows
+        if (rows > 6) {
+            throw Exception("The number of rows exceeded the limit.(it has to be less than 6)")
+        }
+        return ItemBuilder.buildInventory(player, this, page, rows)
     }
 
     fun getSetting(): PackSetting {

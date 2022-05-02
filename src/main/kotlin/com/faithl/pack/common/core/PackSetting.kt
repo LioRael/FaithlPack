@@ -23,6 +23,7 @@ class PackSetting(val name: String, val data: ConfigurationSection) {
 
     val inventory = data.getConfigurationSection("inventory")
     val sort = data.getConfigurationSection("sort")
+    val bind = data.getConfigurationSection("bind")
 
     val permission = data.getString("use-permission")
     val lock = data.getBoolean("lock")

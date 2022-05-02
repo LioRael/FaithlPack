@@ -1,8 +1,10 @@
 package com.faithl.pack.internal.command
 
 import com.faithl.pack.FaithlPack
+import com.faithl.pack.internal.command.impl.CommandBind
 import com.faithl.pack.internal.command.impl.CommandOpen
 import com.faithl.pack.internal.command.impl.CommandReload
+import com.faithl.pack.internal.command.impl.CommandUnbind
 import taboolib.common.platform.ProxyCommandSender
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
@@ -23,7 +25,15 @@ object CommandHandler {
     @CommandBody(permission = "faithlpack.reload")
     val reload = CommandReload.command
 
-    @CommandBody
+    @AppearHelper
+    @CommandBody(permission = "faithlpack.bind")
+    val bind = CommandBind.command
+
+    @AppearHelper
+    @CommandBody(permission = "faithlpack.unbind")
+    val unbind = CommandUnbind.command
+
+    @CommandBody(permission = "faithlpack.access")
     val main = mainCommand {
         execute<ProxyCommandSender> { sender, _, _ ->
             generateMainHelper(sender)

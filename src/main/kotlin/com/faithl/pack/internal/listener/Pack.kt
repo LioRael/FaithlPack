@@ -29,10 +29,6 @@ object Pack {
         if (itemStack.isAir()) {
             return
         }
-        val type = itemStack.getItemTag().getDeep("pack.type")
-        if (type != null) {
-            return
-        }
         if (e.packData.getSetting().sort?.getBoolean("must-condition") == true) {
             if (e.action == InventoryAction.PICKUP_ALL
                 || e.action == InventoryAction.PICKUP_HALF
@@ -95,26 +91,26 @@ object Pack {
                 }
             }
             "setting.auto-pickup" -> {
-                if (pack.sort?.getBoolean("auto-pickup.enabled") == null) {
-                    e.player.sendLang("pack-auto-pick-error")
+                if (pack.sort?.getBoolean("auto-pickup.enabled") == null || !pack.sort.getBoolean("auto-pickup.enabled")) {
+                    e.player.sendLang("pack-auto-pickup-error")
                     return
                 }
                 if (pack.permission != null && !e.player.hasPermission(pack.permission)) {
-                    e.player.sendLang("pack-auto-pick-error")
+                    e.player.sendLang("pack-auto-pickup-no-perm")
                     return
                 }
                 val autoPickupPermission = pack.sort.getString("auto-pickup.permission")
                 if (autoPickupPermission != null && !e.player.hasPermission(autoPickupPermission)) {
-                    e.player.sendLang("pack-auto-pick-error")
+                    e.player.sendLang("pack-auto-pickup-no-perm")
                     return
                 }
-                if (Database.INSTANCE.getPackOption(e.player.uniqueId, pack.name, "auto-pick").toBoolean()) {
-                    Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pick", false.toString())
-                    e.player.sendLang("pack-auto-pick-off", pack.name)
+                if (Database.INSTANCE.getPackOption(e.player.uniqueId, pack.name, "auto-pickup").toBoolean()) {
+                    Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pickup", false.toString())
+                    e.player.sendLang("pack-auto-pickup-off", pack.name)
                     return
                 } else {
-                    Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pick", true.toString())
-                    e.player.sendLang("pack-auto-pick-on", pack.name)
+                    Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pickup", true.toString())
+                    e.player.sendLang("pack-auto-pickup-on", pack.name)
                     return
                 }
             }
