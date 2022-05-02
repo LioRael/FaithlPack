@@ -5,7 +5,7 @@ name: '工具仓库'
 lock: true
 use-permission: 'faithlpack.pack.tool'
 inventory:
-  title: '&b工具仓库 &8[{page}/{pages}]'
+  title: '&b工具仓库 &8[%faithlpack_page%/%faithlpack_pages%]'
   pages: 3
   rows: 6
   default-size: 18

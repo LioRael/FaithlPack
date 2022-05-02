@@ -20,21 +20,21 @@ fun checkUpdate(sender: Player? = null): Boolean {
     try {
         val id = 1
         val url = "https://shuna.faithl.com/api/resource/${id}/version"
-        if (!FaithlPack.setting.getBoolean("Options.check-update")) {
+        if (!FaithlPack.setting.getBoolean("options.check-update")) {
             return true
         }
         val version = Version(getResult(url))
         if (version > Version(pluginVersion)) {
             if (sender != null) {
                 sender.sendLangIfEnabled(
-                    "Plugin-Update",
+                    "plugin-update",
                     pluginVersion,
                     version.source,
                     "https://beta.mcbbs.net/resource/8gu5gwi3"
                 )
             } else {
                 console().sendLangIfEnabled(
-                    "Plugin-Update",
+                    "plugin-update",
                     pluginVersion,
                     version.source,
                     "https://beta.mcbbs.net/resource/8gu5gwi3"
