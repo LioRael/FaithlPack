@@ -21,17 +21,21 @@ object ItemBuilder {
         val inventory = Bukkit.createInventory(
             null,
             rows * 9,
-            packData.getSetting().inventory?.getString("title")?.colored() ?: packData.name
+            packData.getSetting().inventory?.getString("title")?.colored()?.replacePlaceholder(player) ?: packData.name
         )
         if (packData.getSetting().lock) {
             val unlockedSize = FaithlPackAPI.getUnlockedSize(player, packData)
-            val lockedItem = page * (rows - 1) * 9 - unlockedSize
             val lockedItemStack = getNBTItemStack(player, packData, page, "locked")
             for (slot in 0 until inventory.size - 9) {
                 inventory.setItem(slot, lockedItemStack)
             }
-            if (lockedItem < (rows - 1) * 9) {
-                for (slot in 0 until inventory.size - 9 - lockedItem) {
+            val deadline = if (unlockedSize - (page - 1) * (inventory.size - 9) > (inventory.size - 9)) {
+                (inventory.size - 9)
+            } else {
+                unlockedSize - (page - 1) * (inventory.size - 9)
+            }
+            if (deadline > 0) {
+                for (slot in 0 until deadline) {
                     inventory.clear(slot)
                 }
             }

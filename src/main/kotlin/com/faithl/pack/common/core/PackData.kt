@@ -3,11 +3,11 @@ package com.faithl.pack.common.core
 import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.api.event.PackOpenEvent
 import com.faithl.pack.common.item.ItemBuilder
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import taboolib.module.nms.getItemTag
-import taboolib.platform.util.sendLang
 
 /**
  * @author Leosouthey
@@ -15,25 +15,34 @@ import taboolib.platform.util.sendLang
  **/
 class PackData(val name: String, val data: MutableMap<Int, ItemStack?> = mutableMapOf()) {
 
-    fun open(player: Player, page: Int) {
+    /**
+     * 打开玩家仓库
+     *
+     * @param player 玩家
+     * @param page 页数
+     * @param opener 打开者
+     */
+    fun open(player: Player, page: Int, opener: Player = player) {
         if (page <= 0) {
-            player.sendLang("pack-page-switch-limit")
+            opener.sendLangIfEnabled("pack-page-switch-limit")
             return
         }
         if (page > getSetting().inventory!!.getInt("pages")) {
-            player.sendLang("pack-page-switch-limit")
+            opener.sendLangIfEnabled("pack-page-switch-limit")
             return
         }
         val permission = getSetting().permission
-        if (permission != null && !player.hasPermission(permission)) {
-            player.sendLang("player-no-permission")
+        if (permission != null && !opener.hasPermission(permission)) {
+            opener.sendLangIfEnabled("player-no-permission")
             return
         }
+        FaithlPackAPI.preopeningPack.add(PreopeningPack(opener, this, page))
         val inventory = build(player, page)
-        FaithlPackAPI.openingPacks.add(OpeningPack(player, this, inventory, page))
-        val event = PackOpenEvent(player, this, page, inventory)
+        FaithlPackAPI.preopeningPack.removeIf { it.player === opener }
+        FaithlPackAPI.openingPacks.add(OpeningPack(opener, this, inventory, page))
+        val event = PackOpenEvent(opener, this, page, inventory)
         if (event.call()) {
-            player.openInventory(event.inventory)
+            opener.openInventory(event.inventory)
         }
     }
 

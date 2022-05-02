@@ -1,11 +1,11 @@
 package com.faithl.pack.common.core
 
 import com.faithl.pack.FaithlPack
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import taboolib.common.platform.ProxyCommandSender
 import taboolib.common.platform.function.console
 import taboolib.common.platform.function.releaseResourceFile
 import taboolib.module.configuration.Configuration
-import taboolib.module.lang.sendLang
 import java.io.File
 
 /**
@@ -40,7 +40,11 @@ object PackLoader {
             val conf = Configuration.loadFromFile(it)
             PackSetting(conf.getString("name")!!, conf)
         }
-        sender.sendLang("loader-loaded", PackSetting.instances.size, System.currentTimeMillis() - serializingTime)
+        sender.sendLangIfEnabled(
+            "loader-loaded",
+            PackSetting.instances.size,
+            System.currentTimeMillis() - serializingTime
+        )
     }
 
     private fun filterMenuFiles(file: File): List<File> {

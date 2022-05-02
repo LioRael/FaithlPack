@@ -1,9 +1,9 @@
 package com.faithl.pack.internal.command.impl
 
 import com.faithl.pack.internal.database.Database
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import taboolib.common.platform.ProxyCommandSender
 import taboolib.common.platform.command.subCommand
-import taboolib.module.lang.sendLang
 
 object CommandSave {
 
@@ -14,7 +14,7 @@ object CommandSave {
                     Database.INSTANCE.setPackData(key, it)
                 }
             }
-            sender.sendLang("command-save-info")
+            sender.sendLangIfEnabled("command-save-info")
         }
     }
 

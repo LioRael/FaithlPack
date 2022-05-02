@@ -5,6 +5,7 @@
 
 options:
   check-update: true
+  message: true
 database:
   type: SQLite
   source:

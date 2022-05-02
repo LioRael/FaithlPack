@@ -19,8 +19,8 @@ object CommandHandler {
     val open = CommandOpen.command
 
     @AppearHelper
-    @CommandBody(permission = "faithlpack.reload")
-    val reload = CommandReload.command
+    @CommandBody(permission = "faithlpack.clear")
+    val clear = CommandClear.command
 
     @AppearHelper
     @CommandBody(permission = "faithlpack.bind")
@@ -33,6 +33,10 @@ object CommandHandler {
     @AppearHelper
     @CommandBody(permission = "faithlpack.save")
     val save = CommandSave.command
+
+    @AppearHelper
+    @CommandBody(permission = "faithlpack.reload")
+    val reload = CommandReload.command
 
     @CommandBody(permission = "faithlpack.access")
     val main = mainCommand {

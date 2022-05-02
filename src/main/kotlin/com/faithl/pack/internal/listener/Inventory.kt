@@ -10,6 +10,7 @@ import com.faithl.pack.internal.command.impl.CommandUnbind
 import com.faithl.pack.internal.database.Database
 import com.faithl.pack.internal.util.condition
 import com.faithl.pack.internal.util.putTo
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.inventory.*
@@ -18,7 +19,6 @@ import taboolib.library.xseries.XSound
 import taboolib.module.nms.getItemTag
 import taboolib.module.nms.getName
 import taboolib.platform.util.isAir
-import taboolib.platform.util.sendLang
 
 /**
  * @author Leosouthey
@@ -123,7 +123,7 @@ object Inventory {
             if (autoPickupPermission != null && !player.hasPermission(autoPickupPermission)) {
                 continue@pack
             }
-            if (condition(pack, e.item.itemStack)) {
+            if (condition(player, pack, e.item.itemStack)) {
                 val itemStack = e.item.itemStack.clone()
                 page@ for (page in 1..pack.inventory!!.getInt("pages")) {
                     val packData = Database.INSTANCE.getPackData(player.uniqueId, pack.name)
@@ -142,7 +142,7 @@ object Inventory {
                     }
                 }
                 if (e.item.itemStack.amount - itemStack.amount != 0) {
-                    player.sendLang(
+                    player.sendLangIfEnabled(
                         "pack-auto-pickup-info",
                         e.item.itemStack.amount - itemStack.amount,
                         e.item.itemStack.getName(),

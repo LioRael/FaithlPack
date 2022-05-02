@@ -2,13 +2,13 @@ package com.faithl.pack
 
 import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.common.core.PackLoader
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.function.console
 import taboolib.common.platform.function.pluginVersion
 import taboolib.common.platform.function.runningPlatform
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
-import taboolib.module.lang.sendLang
 import taboolib.module.metrics.Metrics
 import taboolib.platform.BukkitPlugin
 
@@ -30,14 +30,14 @@ object FaithlPack : Plugin() {
 
     override fun onEnable() {
         PackLoader.loadInventories()
-        console().sendLang("plugin-enabled", pluginVersion, KotlinVersion.CURRENT.toString())
+        console().sendLangIfEnabled("plugin-enabled", pluginVersion, KotlinVersion.CURRENT.toString())
     }
 
     override fun onDisable() {
         FaithlPackAPI.openingPacks.forEach {
             FaithlPackAPI.save(it.player, it.packData)
         }
-        console().sendLang("plugin-disabled")
+        console().sendLangIfEnabled("plugin-disabled")
     }
 
 }

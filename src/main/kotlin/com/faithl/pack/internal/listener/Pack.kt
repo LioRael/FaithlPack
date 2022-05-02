@@ -4,6 +4,7 @@ import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.api.event.*
 import com.faithl.pack.internal.database.Database
 import com.faithl.pack.internal.util.condition
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.player.PlayerQuitEvent
 import taboolib.common.LifeCycle
@@ -15,7 +16,6 @@ import taboolib.common.util.asList
 import taboolib.module.kether.KetherShell
 import taboolib.module.nms.getItemTag
 import taboolib.platform.util.isAir
-import taboolib.platform.util.sendLang
 
 /**
  * @author Leosouthey
@@ -29,6 +29,9 @@ object Pack {
         if (itemStack.isAir()) {
             return
         }
+        itemStack.getItemTag().getDeep("pack.type")?.let {
+            return
+        }
         if (e.packData.getSetting().sort?.getBoolean("must-condition") == true) {
             if (e.action == InventoryAction.PICKUP_ALL
                 || e.action == InventoryAction.PICKUP_HALF
@@ -38,8 +41,8 @@ object Pack {
                 || e.action == InventoryAction.SWAP_WITH_CURSOR
                 || e.action == InventoryAction.HOTBAR_SWAP
             ) {
-                if (!condition(e.packData.getSetting(), itemStack)) {
-                    e.player.sendLang("pack-place-error", e.packData.name)
+                if (!condition(e.player, e.packData.getSetting(), itemStack)) {
+                    e.player.sendLangIfEnabled("pack-place-error", e.packData.name)
                     e.isCancelled = true
                 }
             }
@@ -73,7 +76,7 @@ object Pack {
                     }
                 }
             }
-            "unlock" -> {
+            "locked" -> {
                 if (e.isLeftClick) {
                     KetherShell.eval(
                         source = pack.inventory!!["items.unlock.action.left-click"]?.toString()
@@ -92,25 +95,25 @@ object Pack {
             }
             "setting.auto-pickup" -> {
                 if (pack.sort?.getBoolean("auto-pickup.enabled") == null || !pack.sort.getBoolean("auto-pickup.enabled")) {
-                    e.player.sendLang("pack-auto-pickup-error")
+                    e.player.sendLangIfEnabled("pack-auto-pickup-error")
                     return
                 }
                 if (pack.permission != null && !e.player.hasPermission(pack.permission)) {
-                    e.player.sendLang("pack-auto-pickup-no-perm")
+                    e.player.sendLangIfEnabled("pack-auto-pickup-no-perm")
                     return
                 }
                 val autoPickupPermission = pack.sort.getString("auto-pickup.permission")
                 if (autoPickupPermission != null && !e.player.hasPermission(autoPickupPermission)) {
-                    e.player.sendLang("pack-auto-pickup-no-perm")
+                    e.player.sendLangIfEnabled("pack-auto-pickup-no-perm")
                     return
                 }
                 if (Database.INSTANCE.getPackOption(e.player.uniqueId, pack.name, "auto-pickup").toBoolean()) {
                     Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pickup", false.toString())
-                    e.player.sendLang("pack-auto-pickup-off", pack.name)
+                    e.player.sendLangIfEnabled("pack-auto-pickup-off", pack.name)
                     return
                 } else {
                     Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pickup", true.toString())
-                    e.player.sendLang("pack-auto-pickup-on", pack.name)
+                    e.player.sendLangIfEnabled("pack-auto-pickup-on", pack.name)
                     return
                 }
             }

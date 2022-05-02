@@ -2,10 +2,12 @@ package com.faithl.pack.internal.util
 
 import com.faithl.pack.common.core.PackSetting
 import ink.ptms.zaphkiel.ZaphkielAPI
+import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import taboolib.common.util.asList
 import taboolib.library.xseries.parseToMaterial
+import taboolib.module.nms.getI18nName
 import taboolib.module.nms.getItemTag
 import taboolib.module.nms.getName
 import taboolib.platform.util.hasLore
@@ -56,13 +58,13 @@ fun ItemStack.putTo(inventory: Inventory): ItemStack {
     return this
 }
 
-fun condition(pack: PackSetting, item: ItemStack): Boolean {
+fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
     val conditions = pack.sort?.getMapList("condition") ?: return true
     for (condition in conditions) {
         when (condition["mode"]) {
             "name" -> {
                 condition["value"]?.asList()?.forEach { value ->
-                    if (item.getName().contains(value)) {
+                    if (item.getI18nName(player).contains(value)) {
                         return true
                     }
                 }
@@ -94,6 +96,20 @@ fun condition(pack: PackSetting, item: ItemStack): Boolean {
                         return true
                     }
                 }
+            }
+            "nbt-v" -> {
+                if (item.getItemTag().size <= 0) {
+                    return false
+                }
+                val list = condition["value"]?.asList() ?: listOf()
+                return item.getItemTag().values.map { it.asString() }.containsAll(list)
+            }
+            "nbt-k" -> {
+                if (item.getItemTag().size <= 0) {
+                    return false
+                }
+                val list = condition["value"]?.asList() ?: listOf()
+                return item.getItemTag().keys.containsAll(list)
             }
         }
     }

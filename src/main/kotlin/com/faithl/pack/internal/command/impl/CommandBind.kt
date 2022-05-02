@@ -1,6 +1,7 @@
 package com.faithl.pack.internal.command.impl
 
 import com.faithl.pack.common.core.PackSetting
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -11,11 +12,9 @@ import taboolib.common.platform.function.onlinePlayers
 import taboolib.library.xseries.XSound
 import taboolib.library.xseries.parseToXMaterial
 import taboolib.module.chat.colored
-import taboolib.module.lang.sendLang
 import taboolib.module.nms.getItemTag
 import taboolib.platform.util.buildItem
 import taboolib.platform.util.giveItem
-import taboolib.platform.util.sendLang
 
 object CommandBind {
 
@@ -29,7 +28,7 @@ object CommandBind {
             execute<ProxyPlayer> { sender, _, argument ->
                 val pack = PackSetting.instances.find { it.name == argument } ?: return@execute
                 val bindItem = buildBindItem(pack)
-                sender.sendLang("command-bind-info", sender.name, pack.name)
+                sender.sendLangIfEnabled("command-bind-info", sender.name, pack.name)
                 val senderPlayer: Player = sender.cast()
                 XSound.ENTITY_ITEM_PICKUP.play(senderPlayer)
                 senderPlayer.giveItem(bindItem)
@@ -40,12 +39,12 @@ object CommandBind {
                         it.name
                     }
                 }
-                execute<ProxyPlayer> { sender, context, argument ->
+                execute<ProxyCommandSender> { sender, context, argument ->
                     val player = Bukkit.getPlayerExact(argument) ?: return@execute
                     val pack = PackSetting.instances.find { it.name == context.argument(-1) } ?: return@execute
                     val bindItem = buildBindItem(pack)
-                    sender.sendLang("command-bind-info", player.name, pack.name)
-                    player.sendLang("player-bind", pack.name)
+                    sender.sendLangIfEnabled("command-bind-info", player.name, pack.name)
+                    player.sendLangIfEnabled("player-bind", pack.name)
                     XSound.ENTITY_ITEM_PICKUP.play(player)
                     player.giveItem(bindItem)
                 }

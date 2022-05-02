@@ -4,9 +4,9 @@ import com.faithl.pack.FaithlPack
 import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.common.core.PackLoader
 import com.faithl.pack.common.core.PackSetting
+import com.faithl.pack.internal.util.sendLangIfEnabled
 import taboolib.common.platform.ProxyCommandSender
 import taboolib.common.platform.command.subCommand
-import taboolib.module.lang.sendLang
 
 object CommandReload {
 
@@ -18,7 +18,7 @@ object CommandReload {
                 it.player.closeInventory()
             }
             PackLoader.loadInventories(sender)
-            sender.sendLang("command-reload-info")
+            sender.sendLangIfEnabled("command-reload-info")
         }
     }
 
