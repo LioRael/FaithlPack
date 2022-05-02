@@ -57,40 +57,42 @@ fun ItemStack.putTo(inventory: Inventory): ItemStack {
 }
 
 fun condition(pack: PackSetting, item: ItemStack): Boolean {
-    val conditions = pack.sort?.getConfigurationSection("condition") ?: return true
-    when (conditions.getString("mode")) {
-        "name" -> {
-            pack.sort["condition.value"]?.asList()?.forEach { value ->
-                if (item.getName().contains(value)) {
-                    return true
-                }
-            }
-        }
-        "lore" -> {
-            if (item.itemMeta == null) {
-                return false
-            }
-            pack.sort["condition.value"]?.asList()?.forEach { value ->
-                if (item.hasLore(value)) {
-                    return true
-                }
-            }
-        }
-        "zap", "zaphkiel" -> {
-            val itemStream = ZaphkielAPI.read(item)
-            if (itemStream.isExtension()) {
-                val type = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?: return false
-                pack.sort["condition.value"]?.asList()?.forEach { value ->
-                    if (type == value) {
+    val conditions = pack.sort?.getMapList("condition") ?: return true
+    for (condition in conditions) {
+        when (condition["mode"]) {
+            "name" -> {
+                condition["value"]?.asList()?.forEach { value ->
+                    if (item.getName().contains(value)) {
                         return true
                     }
                 }
             }
-        }
-        "id", "type", "material" -> {
-            pack.sort["condition.value"]?.asList()?.forEach { value ->
-                if (value.parseToMaterial() == item.type) {
-                    return true
+            "lore" -> {
+                if (item.itemMeta == null) {
+                    return false
+                }
+                condition["value"]?.asList()?.forEach { value ->
+                    if (item.hasLore(value)) {
+                        return true
+                    }
+                }
+            }
+            "zap", "zaphkiel" -> {
+                val itemStream = ZaphkielAPI.read(item)
+                if (itemStream.isExtension()) {
+                    val type = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?: return false
+                    condition["value"]?.asList()?.forEach { value ->
+                        if (type == value) {
+                            return true
+                        }
+                    }
+                }
+            }
+            "id", "type", "material" -> {
+                condition["value"]?.asList()?.forEach { value ->
+                    if (value.parseToMaterial() == item.type) {
+                        return true
+                    }
                 }
             }
         }

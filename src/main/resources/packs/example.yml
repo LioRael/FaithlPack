@@ -53,10 +53,13 @@ inventory:
 sort:
   must-condition: true
   condition:
-    mode: 'name'
-    value:
-      - '镐'
-      - '斧'
+    - mode: 'name'
+      value:
+        - '镐'
+        - '斧'
+    - mode: 'lore'
+      value:
+        - '工具'
   auto-pickup:
     enabled: true
     player-default-enabled: true
