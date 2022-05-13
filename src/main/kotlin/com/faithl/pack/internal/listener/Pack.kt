@@ -5,6 +5,7 @@ import com.faithl.pack.api.event.*
 import com.faithl.pack.internal.database.Database
 import com.faithl.pack.internal.util.condition
 import com.faithl.pack.internal.util.sendLangIfEnabled
+import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.player.PlayerQuitEvent
 import taboolib.common.LifeCycle
@@ -22,6 +23,8 @@ import taboolib.platform.util.isAir
  * @since 2022/4/30-19:48
  **/
 object Pack {
+
+    val cache = ArrayList<Player>()
 
     @SubscribeEvent
     fun e(e: PackPlaceItemEvent) {
@@ -132,9 +135,13 @@ object Pack {
 
     @SubscribeEvent
     fun e(e: PackSaveEvent) {
-        submit(async = true) {
-            e.packData.setPageItems(e.page, e.inventory)
-            FaithlPackAPI.save(e.player, e.packData)
+        if (!cache.contains(e.player)) {
+            submit(async = true) {
+                cache.add(e.player)
+                e.packData.setPageItems(e.page, e.inventory)
+                FaithlPackAPI.save(e.player, e.packData)
+                cache.remove(e.player)
+            }
         }
     }
 
@@ -147,8 +154,12 @@ object Pack {
     fun autoSave() {
         submit(async = true, period = 20 * 60) {
             FaithlPackAPI.openingPacks.forEach {
-                it.packData.setPageItems(it.page, it.inventory)
-                FaithlPackAPI.save(it.player, it.packData)
+                if (!cache.contains(it.player)) {
+                    cache.add(it.player)
+                    it.packData.setPageItems(it.page, it.inventory)
+                    FaithlPackAPI.save(it.player, it.packData)
+                    cache.remove(it.player)
+                }
             }
         }
     }

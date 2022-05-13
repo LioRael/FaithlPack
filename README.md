@@ -21,7 +21,7 @@ FaithlPack 是一款基于TabooLib + Kotlin的服务端插件，且时刻保持�
 - 开源免费
 
 ### 注意事项
-**破坏性更新**: 本插件已经迭代到V2，重写全部代码，从V1更新到V2请备份数据联系作者。
+**破坏性更新**: 本插件已经迭代到V2，重写全部代码，从V1更新到V2请备份数据联系作者。  
 **更新内容**:
 - 优化数据结构
 - 优化数据缓存
@@ -32,24 +32,23 @@ FaithlPack 是一款基于TabooLib + Kotlin的服务端插件，且时刻保持�
 - 新增清空玩家仓库指令
 
 ### 使用方法
-[文档完善中](https://pack.faithl.com)
+[文档](https://pack.faithl.com)
 
 ### 反馈
-- [交流群](https://jq.qq.com/?_wv=1027&k=zYnpVX42)
+- [交流群](https://jq.qq.com/?_wv=1027&k=zYnpVX42) (107659088)
 - [Github Issue](https://github.com/Leosouthey/FaithlPack/issues)
 
 ### 交流群
-我们强烈建议您加入交流群，您可以在此快速高效的反馈插件BUG。
-[点击加入](https://jq.qq.com/?_wv=1027&k=zYnpVX42)
+我们强烈建议您加入交流群，您可以在此快速高效的反馈插件BUG。  
+[点击加入](https://jq.qq.com/?_wv=1027&k=zYnpVX42) (107659088)
 
 ### 插件截图
-![Description](https://attachment.mcbbs.net/data/myattachment/forum/202205/02/223024ol7575m036lsmum3.png)
-![Description](https://attachment.mcbbs.net/data/myattachment/forum/202205/02/223112y8cr0mrhaarltavm.png)
-![Description](https://attachment.mcbbs.net/data/myattachment/forum/202205/02/223151tcflg4jz20og8zbl.png)
-![Description](https://attachment.mcbbs.net/data/myattachment/forum/202205/02/223245dstfzfrytufg3f03.png)
-![Description](https://attachment.mcbbs.net/data/myattachment/forum/202205/02/223318denwcsydjxeydjyp.png)
-![Description](https://attachment.mcbbs.net/data/myattachment/forum/202205/02/223335zuuedxubesx5e8bg.png)
-![Description](https://attachment.mcbbs.net/data/myattachment/forum/202205/02/223351kp7hhgdhhl4l04nl.png)
+![image.png](https://attachment.mcbbs.net/public/resource/6760524e-b605-4e21-853c-def7969f0f2b.png)
+![image.png](https://attachment.mcbbs.net/public/resource/6b6baf5a-d032-4a7f-b2f8-b26c50904524.png)
+![image.png](https://attachment.mcbbs.net/public/resource/84cc510d-93f2-4e93-a2bb-4920f40def21.png)
+![image.png](https://attachment.mcbbs.net/public/resource/310cd0ca-263d-4dfe-affa-5369e6bdff3f.png)
+![image.png](https://attachment.mcbbs.net/public/resource/00cd0718-85d7-4410-be54-3f07d53889c9.png)
+![image.png](https://attachment.mcbbs.net/public/resource/47fdae37-099b-4cff-a3ab-56fdceb12aa8.png)
 
 ### 关于作者
 作者已经开学，近期很少活动。
@@ -58,7 +57,7 @@ FaithlPack 是一款基于TabooLib + Kotlin的服务端插件，且时刻保持�
 ![Bstats](https://bstats.org/signatures/bukkit/FaithlPack.svg)
 
 ### 插件开源
-开源协议: GPL-3.0
-开源地址: [https://github.com/Leosouthey/FaithlPack/](https://github.com/Leosouthey/FaithlPack/)
-如果您喜欢本插件，别忘了到Github点一颗小心心。
-本插件所用所有代码均为原创,不存在借用/抄袭等行为
+开源协议: GPL-3.0  
+开源地址: [Github](https://github.com/Leosouthey/FaithlPack/)  
+如果您喜欢本插件，别忘了到Github点一颗小心心。  
+本插件所用所有代码均为原创,不存在借用/抄袭等行为  

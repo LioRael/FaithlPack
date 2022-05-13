@@ -1,4 +1,5 @@
 plugins {
+    `maven-publish`
     java
     id("io.izzel.taboolib") version "1.34"
     id("org.jetbrains.kotlin.jvm") version "1.6.20"
@@ -60,4 +61,25 @@ tasks.withType<JavaCompile> {
 configure<JavaPluginExtension> {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+publishing {
+    repositories {
+        maven("https://repo.tabooproject.org/repository/releases/") {
+            credentials {
+                username = project.findProperty("username").toString()
+                password = project.findProperty("password").toString()
+            }
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            groupId = "com.faithl"
+            artifactId = "pack"
+        }
+    }
 }
