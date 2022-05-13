@@ -18,8 +18,9 @@ taboolib {
     install("module-kether")
     install("module-nms")
     install("module-nms-util")
+    install("expansion-javascript")
     classifier = null
-    version = "6.0.7-60"
+    version = "6.0.7-64"
     description {
         contributors {
             name("Leosouthey")

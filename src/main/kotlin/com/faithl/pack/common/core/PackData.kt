@@ -64,7 +64,7 @@ class PackData(val name: String, val data: MutableMap<Int, ItemStack?> = mutable
             throw Exception("The number of rows exceeded the limit.(it has to be less than 6)")
         } else {
             val items = mutableMapOf<Int, ItemStack>()
-            for (i in (page - 1) * (rows - 1) * 9 until page * (rows - 1) * 9 - 1) {
+            for (i in (page - 1) * (rows - 1) * 9 until page * (rows - 1) * 9) {
                 val item = data[i] ?: continue
                 items[i % ((rows - 1) * 9)] = item
             }

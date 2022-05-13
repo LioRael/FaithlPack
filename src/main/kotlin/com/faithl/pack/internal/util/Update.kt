@@ -23,7 +23,7 @@ fun checkUpdate(sender: Player? = null): Boolean {
         if (!FaithlPack.setting.getBoolean("options.check-update")) {
             return true
         }
-        val version = Version(getResult(url))
+        val version = Version(getResult(url).replace("\"", ""))
         if (version > Version(pluginVersion)) {
             if (sender != null) {
                 sender.sendLangIfEnabled(

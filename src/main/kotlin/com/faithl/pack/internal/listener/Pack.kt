@@ -132,8 +132,10 @@ object Pack {
 
     @SubscribeEvent
     fun e(e: PackSaveEvent) {
-        e.packData.setPageItems(e.page, e.inventory)
-        FaithlPackAPI.save(e.player, e.packData)
+        submit(async = true) {
+            e.packData.setPageItems(e.page, e.inventory)
+            FaithlPackAPI.save(e.player, e.packData)
+        }
     }
 
     @SubscribeEvent
