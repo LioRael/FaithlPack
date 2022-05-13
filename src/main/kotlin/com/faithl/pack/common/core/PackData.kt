@@ -36,11 +36,11 @@ class PackData(val name: String, val data: MutableMap<Int, ItemStack?> = mutable
             opener.sendLangIfEnabled("player-no-permission")
             return
         }
-        FaithlPackAPI.preopeningPack.add(PreopeningPack(opener, this, page))
+        FaithlPackAPI.preopeningPack.add(PreopeningPack(player, opener, this, page))
         val inventory = build(player, page)
         FaithlPackAPI.preopeningPack.removeIf { it.player === opener }
-        FaithlPackAPI.openingPacks.add(OpeningPack(opener, this, inventory, page))
-        val event = PackOpenEvent(opener, this, page, inventory)
+        FaithlPackAPI.openingPacks.add(OpeningPack(opener, opener, this, inventory, page))
+        val event = PackOpenEvent(player, opener, this, page, inventory)
         if (event.call()) {
             opener.openInventory(event.inventory)
         }

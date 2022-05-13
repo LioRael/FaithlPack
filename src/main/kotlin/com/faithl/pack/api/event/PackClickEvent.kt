@@ -12,6 +12,7 @@ import taboolib.platform.type.BukkitProxyEvent
  **/
 class PackClickEvent(
     val player: Player,
+    val clicker: Player,
     val packData: PackData,
     val page: Int,
     var inventory: Inventory,

@@ -13,7 +13,7 @@ object Placeholder : PlaceholderExpansion {
         if (player == null) {
             return "error"
         }
-        val openingPack = FaithlPackAPI.preopeningPack.firstOrNull { it.player == player } ?: return "error"
+        val openingPack = FaithlPackAPI.preopeningPack.firstOrNull { it.opener == player } ?: return "error"
         when (args) {
             "page" -> {
                 return openingPack.page.toString()
@@ -22,7 +22,7 @@ object Placeholder : PlaceholderExpansion {
                 return openingPack.packData.getSetting().inventory!!.getInt("pages").toString()
             }
             "unlocked" -> {
-                return FaithlPackAPI.getUnlockedSize(player, openingPack.packData).toString()
+                return FaithlPackAPI.getUnlockedSize(openingPack.player, openingPack.packData).toString()
             }
         }
         return "error"

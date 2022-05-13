@@ -20,8 +20,8 @@ object FaithlPackAPI {
      * @param data 仓库数据
      * @param page 页数
      */
-    fun open(player: Player, data: PackData, page: Int) {
-        data.open(player, page)
+    fun open(player: Player, data: PackData, page: Int, opener: Player = player) {
+        data.open(player, page, opener)
     }
 
     fun save(player: Player, packData: PackData) {

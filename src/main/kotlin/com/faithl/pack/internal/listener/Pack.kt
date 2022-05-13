@@ -62,17 +62,17 @@ object Pack {
             "page" -> {
                 if (e.isLeftClick) {
                     val event = PackPageSwitchEvent(
-                        e.player, e.inventory, e.packData, e.page, e.page + 1,
+                        e.player, e.clicker, e.inventory, e.packData, e.page, e.page + 1,
                     )
                     if (event.call()) {
                         e.packData.open(event.player, event.targetPage)
                     }
                 } else if (e.isRightClick) {
                     val event = PackPageSwitchEvent(
-                        e.player, e.inventory, e.packData, e.page, e.page - 1,
+                        e.player, e.clicker, e.inventory, e.packData, e.page, e.page - 1,
                     )
                     if (event.call()) {
-                        e.packData.open(event.player, event.targetPage)
+                        e.packData.open(event.opener, event.targetPage)
                     }
                 }
             }
@@ -81,39 +81,39 @@ object Pack {
                     KetherShell.eval(
                         source = pack.inventory!!["items.locked.action.left-click"]?.toString()
                             ?.asList() ?: return,
-                        sender = adaptPlayer(e.player),
+                        sender = adaptPlayer(e.clicker),
                         namespace = listOf("faithlpack", "faithlpack-internal")
                     )
                 } else if (e.isRightClick) {
                     KetherShell.eval(
                         source = pack.inventory!!["items.locked.action.right-click"]?.toString()
                             ?.asList() ?: return,
-                        sender = adaptPlayer(e.player),
+                        sender = adaptPlayer(e.clicker),
                         namespace = listOf("faithlpack", "faithlpack-internal")
                     )
                 }
             }
             "setting.auto-pickup" -> {
                 if (pack.sort?.getBoolean("auto-pickup.enabled") == null || !pack.sort.getBoolean("auto-pickup.enabled")) {
-                    e.player.sendLangIfEnabled("pack-auto-pickup-error")
+                    e.clicker.sendLangIfEnabled("pack-auto-pickup-error")
                     return
                 }
-                if (pack.permission != null && !e.player.hasPermission(pack.permission)) {
-                    e.player.sendLangIfEnabled("pack-auto-pickup-no-perm")
+                if (pack.permission != null && !e.clicker.hasPermission(pack.permission)) {
+                    e.clicker.sendLangIfEnabled("pack-auto-pickup-no-perm")
                     return
                 }
                 val autoPickupPermission = pack.sort.getString("auto-pickup.permission")
                 if (autoPickupPermission != null && !e.player.hasPermission(autoPickupPermission)) {
-                    e.player.sendLangIfEnabled("pack-auto-pickup-no-perm")
+                    e.clicker.sendLangIfEnabled("pack-auto-pickup-no-perm")
                     return
                 }
-                if (Database.INSTANCE.getPackOption(e.player.uniqueId, pack.name, "auto-pickup").toBoolean()) {
+                if (Database.INSTANCE.getPackOption(e.clicker.uniqueId, pack.name, "auto-pickup").toBoolean()) {
                     Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pickup", false.toString())
-                    e.player.sendLangIfEnabled("pack-auto-pickup-off", pack.name)
+                    e.clicker.sendLangIfEnabled("pack-auto-pickup-off", pack.name)
                     return
                 } else {
                     Database.INSTANCE.setPackOption(e.player.uniqueId, pack.name, "auto-pickup", true.toString())
-                    e.player.sendLangIfEnabled("pack-auto-pickup-on", pack.name)
+                    e.clicker.sendLangIfEnabled("pack-auto-pickup-on", pack.name)
                     return
                 }
             }
@@ -127,7 +127,7 @@ object Pack {
 
     @SubscribeEvent
     fun e(e: PackCloseEvent) {
-        PackSaveEvent(e.player, e.packData, e.page, e.inventory).call()
+        PackSaveEvent(e.player, e.opener, e.packData, e.page, e.inventory).call()
     }
 
     @SubscribeEvent
@@ -140,7 +140,7 @@ object Pack {
 
     @SubscribeEvent
     fun e(e: PackPageSwitchEvent) {
-        PackSaveEvent(e.player, e.packData, e.previousPage, e.previousInventory).call()
+        PackSaveEvent(e.player, e.opener, e.packData, e.previousPage, e.previousInventory).call()
     }
 
     @Awake(LifeCycle.ENABLE)

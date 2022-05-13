@@ -11,6 +11,7 @@ import taboolib.platform.type.BukkitProxyEvent
  **/
 class PackPageSwitchEvent(
     val player: Player,
+    val opener: Player,
     val previousInventory: Inventory,
     var packData: PackData,
     val previousPage: Int,

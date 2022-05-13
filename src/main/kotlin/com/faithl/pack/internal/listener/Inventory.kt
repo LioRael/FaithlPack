@@ -41,14 +41,14 @@ object Inventory {
             return
         }
         val player = e.player as Player
-        if (FaithlPackAPI.openingPacks.find { it.player == player } != null) {
+        if (FaithlPackAPI.openingPacks.find { it.opener == player } != null) {
             return
         }
         if (e.inventory.type == InventoryType.WORKBENCH) {
             return
         }
-        if (CommandUnbind.unbindPlayers.find { e.player.uniqueId == it } != null) {
-            CommandUnbind.unbindPlayers.remove(e.player.uniqueId)
+        if (CommandUnbind.unbindPlayers.find { player.uniqueId == it } != null) {
+            CommandUnbind.unbindPlayers.remove(player.uniqueId)
             return
         }
         for (item in e.inventory.storageContents) {
@@ -70,7 +70,7 @@ object Inventory {
         FaithlPackAPI.openingPacks.find {
             it.player == e.player
         }?.let {
-            PackCloseEvent(e.player as Player, it.packData, it.page, e.inventory).call()
+            PackCloseEvent(e.player as Player, it.opener, it.packData, it.page, e.inventory).call()
             FaithlPackAPI.openingPacks.remove(it)
         }
     }
@@ -82,6 +82,7 @@ object Inventory {
         }?.let {
             val event = PackClickEvent(
                 it.player,
+                it.opener,
                 it.packData,
                 it.page,
                 it.inventory,
@@ -105,7 +106,15 @@ object Inventory {
                 e.isCancelled = true
                 return
             }
-            val event = PackPlaceItemEvent(player, it.inventory, it.packData, it.page, e.action, e.currentItem).call()
+            val event = PackPlaceItemEvent(
+                player,
+                it.opener,
+                it.inventory,
+                it.packData,
+                it.page,
+                e.action,
+                e.currentItem
+            ).call()
             if (!event) {
                 e.isCancelled = true
             }
