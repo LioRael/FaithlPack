@@ -58,6 +58,11 @@ class PackData(val name: String, val data: MutableMap<Int, ItemStack?> = mutable
         return PackSetting.instances.find { it.name == name }!!
     }
 
+    fun addItem(itemStack: ItemStack) {
+        val index = data.keys.toSortedSet().last() + 1
+        data[index] = itemStack
+    }
+
     fun getPageItems(page: Int): MutableMap<Int, ItemStack> {
         val rows = getSetting().rows
         if (rows > 6) {

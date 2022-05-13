@@ -31,8 +31,8 @@ object FaithlPackAPI {
     fun unlock(player: Player, data: PackData, size: Int = 1) {
         val value = getUnlockedSize(player, data)
         Database.INSTANCE.setPackOption(player.uniqueId, data.name, "unlocked-size", (value + size).toString())
-        openingPacks.firstOrNull { it.player == player }?.inventory?.takeItem {
-            it.getItemTag().getDeep("pack.type").toString() == "locked"
+        openingPacks.firstOrNull { it.player == player }?.inventory?.takeItem(size) {
+            it.getItemTag().getDeep("pack.type").asString() == "locked"
         }
     }
 

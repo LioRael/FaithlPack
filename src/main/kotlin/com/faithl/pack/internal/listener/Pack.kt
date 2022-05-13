@@ -8,8 +8,7 @@ import com.faithl.pack.internal.util.sendLangIfEnabled
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.player.PlayerQuitEvent
-import taboolib.common.LifeCycle
-import taboolib.common.platform.Awake
+import taboolib.common.platform.Schedule
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.platform.function.submit
@@ -136,8 +135,8 @@ object Pack {
     @SubscribeEvent
     fun e(e: PackSaveEvent) {
         if (!cache.contains(e.player)) {
+            cache.add(e.player)
             submit(async = true) {
-                cache.add(e.player)
                 e.packData.setPageItems(e.page, e.inventory)
                 FaithlPackAPI.save(e.player, e.packData)
                 cache.remove(e.player)
@@ -150,12 +149,12 @@ object Pack {
         PackSaveEvent(e.player, e.opener, e.packData, e.previousPage, e.previousInventory).call()
     }
 
-    @Awake(LifeCycle.ENABLE)
+    @Schedule(period = 20 * 60)
     fun autoSave() {
-        submit(async = true, period = 20 * 60) {
-            FaithlPackAPI.openingPacks.forEach {
-                if (!cache.contains(it.player)) {
-                    cache.add(it.player)
+        FaithlPackAPI.openingPacks.toList().forEach {
+            if (!cache.contains(it.player)) {
+                cache.add(it.player)
+                submit(async = true) {
                     it.packData.setPageItems(it.page, it.inventory)
                     FaithlPackAPI.save(it.player, it.packData)
                     cache.remove(it.player)
