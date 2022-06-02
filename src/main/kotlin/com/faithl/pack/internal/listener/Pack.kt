@@ -78,7 +78,6 @@ object Pack {
                     }
                 }
             }
-
             "locked" -> {
                 if (e.isLeftClick) {
                     KetherShell.eval(
@@ -96,7 +95,6 @@ object Pack {
                     )
                 }
             }
-
             "setting.auto-pickup" -> {
                 if (pack.sort?.getBoolean("auto-pickup.enabled") == null || !pack.sort.getBoolean("auto-pickup.enabled")) {
                     e.clicker.sendLangIfEnabled("pack-auto-pickup-error")
