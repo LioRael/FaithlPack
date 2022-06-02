@@ -37,7 +37,7 @@ object CommandOpen {
                 execute<ProxyCommandSender> { sender, context, argument ->
                     val player = Bukkit.getPlayerExact(argument) ?: return@execute
                     val packData = Database.INSTANCE.getPackData(player.uniqueId, context.argument(-1))
-                    FaithlPackAPI.open(player, packData, 1, sender.cast())
+                    FaithlPackAPI.open(sender.cast(), packData, 1, player)
                     player.sendLangIfEnabled("player-opened-pack", packData.name)
                     sender.sendLangIfEnabled("command-open-info", player.name, packData.name)
                     XSound.BLOCK_ENDER_CHEST_OPEN.play(player)

@@ -1,4 +1,4 @@
-package com.faithl.pack.internal.kether;
+package com.faithl.pack.internal.kether
 
 import org.bukkit.entity.Player
 import taboolib.library.kether.ParsedAction

@@ -18,9 +18,11 @@ object Placeholder : PlaceholderExpansion {
             "page" -> {
                 return openingPack.page.toString()
             }
+
             "pages" -> {
                 return openingPack.packData.getSetting().inventory!!.getInt("pages").toString()
             }
+
             "unlocked" -> {
                 return FaithlPackAPI.getUnlockedSize(openingPack.player, openingPack.packData).toString()
             }

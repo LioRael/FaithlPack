@@ -69,6 +69,7 @@ fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
                     }
                 }
             }
+
             "lore" -> {
                 if (item.itemMeta == null) {
                     return false
@@ -79,6 +80,7 @@ fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
                     }
                 }
             }
+
             "zap", "zaphkiel" -> {
                 val itemStream = ZaphkielAPI.read(item)
                 if (itemStream.isExtension()) {
@@ -90,6 +92,7 @@ fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
                     }
                 }
             }
+
             "id", "type", "material" -> {
                 condition["value"]?.asList()?.forEach { value ->
                     if (value.parseToMaterial() == item.type) {
@@ -97,6 +100,7 @@ fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
                     }
                 }
             }
+
             "nbt-v" -> {
                 if (item.getItemTag().size <= 0) {
                     return false
@@ -104,6 +108,7 @@ fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
                 val list = condition["value"]?.asList() ?: listOf()
                 return item.getItemTag().values.map { it.asString() }.containsAll(list)
             }
+
             "nbt-k" -> {
                 if (item.getItemTag().size <= 0) {
                     return false
