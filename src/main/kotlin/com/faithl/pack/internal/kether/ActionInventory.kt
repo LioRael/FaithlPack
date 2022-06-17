@@ -27,6 +27,7 @@ class ActionInventory {
                                 itemStack.getName().contains(value.toString())
                             })
                         }
+
                         "lore" -> {
                             it.complete(player.inventory.hasItem(amount) { itemStack ->
                                 itemStack.hasLore(value.toString())
@@ -52,6 +53,7 @@ class ActionInventory {
                                 itemStack.getName().contains(value.toString())
                             })
                         }
+
                         "lore" -> {
                             it.complete(player.inventory.takeItem(amount) { itemStack ->
                                 itemStack.hasLore(value.toString())

@@ -141,7 +141,10 @@ object Inventory {
             if (autoPickupPermission != null && !player.hasPermission(autoPickupPermission)) {
                 continue@pack
             }
-            if (condition(player, pack, e.item.itemStack)) {
+            if (condition(player, pack, "ban-condition", e.item.itemStack)) {
+                continue@pack
+            }
+            if (condition(player, pack, "condition", e.item.itemStack)) {
                 val itemStack = e.item.itemStack.clone()
                 page@ for (page in 1..pack.inventory!!.getInt("pages")) {
                     val packData = Database.INSTANCE.getPackData(player.uniqueId, pack.name)

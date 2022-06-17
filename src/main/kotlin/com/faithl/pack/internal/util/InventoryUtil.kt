@@ -58,8 +58,8 @@ fun ItemStack.putTo(inventory: Inventory): ItemStack {
     return this
 }
 
-fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
-    val conditions = pack.sort?.getMapList("condition") ?: return true
+fun condition(player: Player, pack: PackSetting, type: String, item: ItemStack): Boolean {
+    val conditions = pack.sort?.getMapList(type) ?: return true
     for (condition in conditions) {
         when (condition["mode"]) {
             "name" -> {
@@ -84,9 +84,9 @@ fun condition(player: Player, pack: PackSetting, item: ItemStack): Boolean {
             "zap", "zaphkiel" -> {
                 val itemStream = ZaphkielAPI.read(item)
                 if (itemStream.isExtension()) {
-                    val type = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?: return false
+                    val itemType = itemStream.getZaphkielData().getDeep("faithlpack.type")?.asString() ?: return false
                     condition["value"]?.asList()?.forEach { value ->
-                        if (type == value) {
+                        if (itemType == value) {
                             return true
                         }
                     }

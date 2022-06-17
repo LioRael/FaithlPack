@@ -34,6 +34,11 @@ object Pack {
         itemStack.getItemTag().getDeep("pack.type")?.let {
             return
         }
+        if (condition(e.player, e.packData.getSetting(), "ban-condition", itemStack)) {
+            e.player.sendLangIfEnabled("pack-place-error", e.packData.name)
+            e.isCancelled = true
+            return
+        }
         if (e.packData.getSetting().sort?.getBoolean("must-condition") == true) {
             if (e.action == InventoryAction.PICKUP_ALL
                 || e.action == InventoryAction.PICKUP_HALF
@@ -43,9 +48,10 @@ object Pack {
                 || e.action == InventoryAction.SWAP_WITH_CURSOR
                 || e.action == InventoryAction.HOTBAR_SWAP
             ) {
-                if (!condition(e.player, e.packData.getSetting(), itemStack)) {
+                if (!condition(e.player, e.packData.getSetting(), "condition", itemStack)) {
                     e.player.sendLangIfEnabled("pack-place-error", e.packData.name)
                     e.isCancelled = true
+                    return
                 }
             }
         }
@@ -78,6 +84,7 @@ object Pack {
                     }
                 }
             }
+
             "locked" -> {
                 if (e.isLeftClick) {
                     KetherShell.eval(
@@ -95,6 +102,7 @@ object Pack {
                     )
                 }
             }
+
             "setting.auto-pickup" -> {
                 if (pack.sort?.getBoolean("auto-pickup.enabled") == null || !pack.sort.getBoolean("auto-pickup.enabled")) {
                     e.clicker.sendLangIfEnabled("pack-auto-pickup-error")

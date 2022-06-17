@@ -60,6 +60,10 @@ sort:
     - mode: 'lore'
       value:
         - '工具'
+  ban-condition:
+    - mode: 'lore'
+      value:
+        - '禁止放入'
   auto-pickup:
     enabled: true
     player-default-enabled: true

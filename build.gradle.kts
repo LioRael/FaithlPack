@@ -21,7 +21,7 @@ taboolib {
     install("module-nms-util")
     install("expansion-javascript")
     classifier = null
-    version = "6.0.7-64"
+    version = "6.0.9-5"
     description {
         contributors {
             name("Leosouthey")
@@ -45,8 +45,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("ink.ptms.core:v11802:11802:mapped")
-    compileOnly("ink.ptms.core:v11802:11802:universal")
+    compileOnly("ink.ptms.core:v11900:11900:mapped")
+    compileOnly("ink.ptms.core:v11900:11900:universal")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
     compileOnly("ink.ptms:Zaphkiel:1.7.6")
     compileOnly("com.google.code.gson:gson:2.9.0")
