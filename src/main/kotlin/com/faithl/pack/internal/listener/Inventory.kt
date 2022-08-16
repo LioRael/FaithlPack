@@ -15,6 +15,7 @@ import com.faithl.pack.internal.util.sendLangIfEnabled
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.inventory.*
+import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.library.xseries.XSound
@@ -32,6 +33,13 @@ object Inventory {
     fun e(e: PlayerJoinEvent) {
         if (e.player.isOp) {
             checkUpdate(e.player)
+        }
+    }
+
+    @SubscribeEvent
+    fun e(e: PlayerDropItemEvent) {
+        if (FaithlPackAPI.openingPacks.find { it.opener == e.player } != null) {
+            e.isCancelled = true
         }
     }
 

@@ -2,7 +2,6 @@ package com.faithl.pack.common.item
 
 import com.faithl.pack.api.FaithlPackAPI
 import com.faithl.pack.common.core.PackData
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
@@ -12,17 +11,20 @@ import taboolib.library.xseries.XMaterial
 import taboolib.library.xseries.parseToXMaterial
 import taboolib.module.chat.colored
 import taboolib.module.nms.getItemTag
+import taboolib.module.ui.buildMenu
+import taboolib.module.ui.type.Basic
 import taboolib.platform.compat.replacePlaceholder
 import taboolib.platform.util.buildItem
 
 object ItemBuilder {
 
     fun buildInventory(player: Player, packData: PackData, page: Int, rows: Int): Inventory {
-        val inventory = Bukkit.createInventory(
-            null,
-            rows * 9,
+        val inventory = buildMenu<Basic>(
             packData.getSetting().inventory?.getString("title")?.colored()?.replacePlaceholder(player) ?: packData.name
-        )
+        ) {
+            handLocked(false)
+            rows(rows * 9)
+        }
         if (packData.getSetting().lock) {
             val unlockedSize = FaithlPackAPI.getUnlockedSize(player, packData)
             val lockedItemStack = getNBTItemStack(player, packData, page, "locked")
@@ -92,8 +94,8 @@ object ItemBuilder {
                 }
                 val enchant = s.split(":")[0]
                 val level = Coerce.toInteger(s.split(":")[1])
-                enchants[XEnchantment.valueOf(enchant).parseEnchantment()!!] =
-                    (enchants[XEnchantment.valueOf(enchant).parseEnchantment()!!] ?: 0) + level
+                enchants[XEnchantment.valueOf(enchant).enchant!!] =
+                    (enchants[XEnchantment.valueOf(enchant).enchant!!] ?: 0) + level
             }
             if (packSetting.inventory?.getBoolean("items.${item}.display.shiny") == true) {
                 shiny()

@@ -23,11 +23,9 @@ object FaithlPackAPI {
     fun open(player: Player, data: PackData, page: Int, opener: Player = player) {
         data.open(player, page, opener)
     }
-
     fun save(player: Player, packData: PackData) {
         Database.INSTANCE.setPackData(player.uniqueId, packData)
     }
-
     fun unlock(player: Player, data: PackData, size: Int = 1) {
         val value = getUnlockedSize(player, data)
         Database.INSTANCE.setPackOption(player.uniqueId, data.name, "unlocked-size", (value + size).toString())
@@ -35,7 +33,6 @@ object FaithlPackAPI {
             it.getItemTag().getDeep("pack.type").asString() == "locked"
         }
     }
-
     fun getUnlockedSize(player: Player, data: PackData): Int {
         return Database.INSTANCE.getPackOption(player.uniqueId, data.name, "unlocked-size")?.toInt()
             ?: (data.getSetting().inventory?.getInt("default-size") ?: 0)

@@ -18,11 +18,11 @@ import java.net.URLConnection
  **/
 fun checkUpdate(sender: Player? = null): Boolean {
     try {
-        val id = 1
-        val url = "https://shuna.faithl.com/api/resource/${id}/version"
         if (!FaithlPack.setting.getBoolean("options.check-update")) {
             return true
         }
+        val id = 1
+        val url = "https://shuna.faithl.com/api/resource/${id}/version"
         val version = Version(getResult(url).replace("\"", ""))
         if (version > Version(pluginVersion)) {
             if (sender != null) {
@@ -45,10 +45,11 @@ fun checkUpdate(sender: Player? = null): Boolean {
         return true
     } catch (e: MalformedURLException) {
         e.printStackTrace()
+        return true
     } catch (e: IOException) {
         e.printStackTrace()
+        return true
     }
-    return true
 }
 
 fun getResult(url: String): String {
