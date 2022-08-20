@@ -23,7 +23,7 @@ object ItemBuilder {
             packData.getSetting().inventory?.getString("title")?.colored()?.replacePlaceholder(player) ?: packData.name
         ) {
             handLocked(false)
-            rows(rows * 9)
+            rows(rows)
         }
         if (packData.getSetting().lock) {
             val unlockedSize = FaithlPackAPI.getUnlockedSize(player, packData)
