@@ -21,7 +21,7 @@ taboolib {
     install("module-nms-util")
     install("expansion-javascript")
     classifier = null
-    version = "6.0.9-62"
+    version = "6.0.12-40"
     description {
         contributors {
             name("Leosouthey")
